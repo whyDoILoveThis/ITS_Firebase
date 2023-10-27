@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>🧐.then(() => {})</title>
+  </head>
+  <body>
+    <!--!!!!!-->
+    <!--! MAIN-WRAP -->
+    <div class="main-wrap">
+      <section class="article-wrap">
+        <article class="article">
+          <h1 class="article__heading">🧐Undersstanding '.then(() => {})'</h1>
+          <p>
+            I found that this explanation made it make sense to me when nothing
+            else could. I am including it here for that reason.
+          </p>
+          <h3>Lets take this code bit for example:</h3>
+          <div class="code code--js">
+            <p><em class="blu">if</em> (user) {</p>
+            <br />
+            <p>
+              <em class="blu">const</em> userDocRef = doc(db,
+              <em class="grn">'users'</em>, user.uid);
+            </p>
+            <br />
+            <p>
+              <em class="comnt">// Get the user document from Firestore</em>
+            </p>
+            <p><em class="red">getDoc</em>(userDocRef)</p>
+            <p>.<em class="blu">then</em>((docSnapshot) => {</p>
+            <p><em class="blu">if</em> (docSnapshot.exists()) {</p>
+            <br />
+            <p>
+              <em class="comnt"
+                >// If the document exists, retrieve the username field</em
+              >
+            </p>
+            <p><em class="blu">const</em> userData = docSnapshot.data();</p>
+            <p><em class="blu">const</em> username = userData.username;</p>
+          </div>
+
+          <p>
+            In the code you above, <b>docSnapshot</b> is a variable that
+            represents the result of fetching a document from Firestore. It's
+            not something you create; rather, it's returned as a result of the
+            <b>getDoc</b> function provided by Firebase Firestore. We could have
+            named it anything in the world.
+          </p>
+
+          <p>Here's what each part of the code does:</p>
+
+          <p>
+            1. <b>const userDocRef = doc(db, 'users', user.uid);</b>: This line
+            creates a reference to a document in the 'users' collection of your
+            Firestore database. It uses the user's unique ID (<b>user.uid</b>)
+            to specify which document to retrieve.
+          </p>
+
+          <p>
+            2. <b>getDoc(userDocRef)</b>: This is a Firestore function that
+            fetches the document specified by <b>userDocRef</b>.
+          </p>
+
+          <p>
+            3. <b>.then((docSnapshot) => {</b>: This part is a JavaScript
+            Promise. It says, "Once you've fetched the document, do something
+            with it." <b>docSnapshot</b> is the result of the document fetch.
+          </p>
+
+          <p>
+            4. <b>if (docSnapshot.exists()) {</b>: This checks if the document
+            exists in Firestore. If it does, it means there's data associated
+            with this user in the 'users' collection.
+          </p>
+
+          <p>
+            5. <b>const userData = docSnapshot.data();</b>: This line extracts
+            the data stored in the document and assigns it to the
+            <b>userData</b> variable. The <b>data()</b> method returns an object
+            representing the data in the document.
+          </p>
+
+          <p>
+            6. <b>const username = userData.username;</b>: Finally, this line
+            retrieves the <b>username</b> field from the <b>userData</b> object.
+            It's assuming that your Firestore document has a field named
+            'username' and assigns its value to the <b>username</b> variable.
+          </p>
+
+          <p>
+            So, <b>docSnapshot</b> is a built-in object that represents the
+            result of fetching a document from Firestore, and you use it to
+            access the data stored in that document. It doesn't need to be
+            created manually; it's provided by the Firebase Firestore library.
+          </p>
+          <button class="btn moreInfoBtn">I still Don't Understand!</button>
+          <div class="hidden btn--more-info-box">
+            <h1>Understanding Promises and .then in JavaScript</h1>
+
+            <p>
+              Yes, that's correct! When you use the <code>.then</code> method in
+              a Promise chain, the arrow function (or callback function) you
+              provide to <code>.then</code> holds the return value of the
+              preceding function in the chain.
+            </p>
+
+            <h2>Here's how it works:</h2>
+
+            <p>
+              1. You start with a Promise, which is a special JavaScript object
+              representing an asynchronous operation.
+            </p>
+            <p>
+              2. You chain <code>.then</code> methods to the Promise. Each
+              <code>.then</code> method takes a callback function as an
+              argument. This callback function will be called when the preceding
+              Promise resolves (i.e., when the asynchronous operation is
+              successful).
+            </p>
+            <p>
+              3. Inside the callback function of <code>.then</code>, you can
+              access the result or value that the preceding Promise resolved
+              with. This value is typically passed as an argument to the
+              callback function.
+            </p>
+
+            <h2>Here's an example to illustrate:</h2>
+
+            <div class="code code--js">
+              <p>&nbsp;someAsyncFunction()</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;.<em class="blu">then</em>((result) => {
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em
+                  class="comnt"
+                >
+                  // This function is called when 'someAsyncFunction' resolves,
+                </em>
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em
+                  class="comnt"
+                >
+                  // and 'result' holds the value that 'someAsyncFunction'
+                  resolved with.
+                </em>
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(result);
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em class="blu"
+                  >return</em
+                >
+                result * 2;
+                <em class="comnt"
+                  >// You can return a new value or Promise here.</em
+                >
+              </p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;})</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;.<em class="blu">then</em>((newResult)
+                => {
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em
+                  class="comnt"
+                >
+                  // This function is called when the previous '.then' resolved,
+                </em>
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em
+                  class="comnt"
+                >
+                  // and 'newResult' holds the value that the previous '.then'
+                  returned.
+                </em>
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(newResult);
+              </p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;})</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;.<em class="blu">catch</em>((error) => {
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em
+                  class="comnt"
+                >
+                  // If any error occurs in the Promise chain, this function is
+                  called.
+                </em>
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.error(error);
+              </p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;});</p>
+            </div>
+
+            <p>In this example:</p>
+
+            <p>
+              - The first <code>.then</code> callback receives the result of
+              <code>someAsyncFunction</code>.
+            </p>
+            <p>
+              - You can perform actions with that result and return a new value
+              or Promise.
+            </p>
+            <p>
+              - The second <code>.then</code> callback receives the value
+              returned by the first <code>.then</code> callback.
+            </p>
+            <p>
+              - If any error occurs at any point in the chain, the
+              <code>.catch</code> callback is called.
+            </p>
+
+            <p>
+              This chaining mechanism allows you to work with asynchronous
+              operations in a structured way, passing data from one step to the
+              next.
+            </p>
+          </div>
+        </article>
+      </section>
+    </div>
+    <!--! MAIN-WRAP -->
+    <!--! !!!!!!! -->
+    <script src="/JS/dynamic-nav.js"></script>
+    <script src="/JS/dropdown-more-info.js"></script>
+  </body>
+</html>

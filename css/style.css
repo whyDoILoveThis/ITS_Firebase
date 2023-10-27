@@ -1,0 +1,456 @@
+
+
+/*TODO: REFACTOR FOR BETTER ORGANIZATION
+        AND REMOVING REDUNDANCIES*/
+
+        :root {
+            --size--brightness-toggler: 50px;
+        }
+
+@font-face {
+    font-family: LucidaConsole;
+    src: url(/fonts/lucon.ttf);
+
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(/fonts/Roboto-Regular.ttf);
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease-in;
+    background-color: rgb(36, 31, 35);
+
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    padding: 1rem 0 0.5rem 1rem;
+    border-bottom: 0.5px solid rgb(90, 105, 110);
+}
+
+li a {
+    text-decoration: none;
+    color: rgb(206, 231, 231);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+a {
+    color: rgb(45, 143, 248);
+    text-decoration: none;
+}
+
+a:hover {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+li a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgb(110, 203, 103);
+}
+
+em {
+    font-style: normal;
+}
+
+.main-wrap {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+/** NAV */
+
+.nav {
+    z-index: 100;
+    background-color: rgb(34, 34, 34);
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 100%;
+    border-right: 2px solid rgb(208, 211, 222);
+    position: fixed;
+    border-top-right-radius: 17px;
+    overflow: auto;
+    margin-top: 0.5rem;
+    transition: all 0.37s ease-out;
+}
+
+.logo-wrap {
+    height: auto;
+    max-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.7rem;
+    border-bottom: 1px solid rgb(115, 115, 115);
+    padding-right: var(--size--brightness-toggler);
+    
+}
+
+.logo__icon {
+    width: 8vw;
+    max-width: 40px;
+    height: 8vw;
+    max-height: 40px;
+    display: inline;
+}
+
+.logo__tag {
+    color: rgb(237, 239, 239);
+    font-family:   Arial, Helvetica, sans-serif;
+    white-space: 1px;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.dark-mode-toggler-wrap {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+ 
+}
+
+.article-wrap {
+    margin-left: 30%;
+    width: calc(70% - 2rem * 2);
+    padding: 2rem;
+}
+
+.article {
+    border: 1px solid rgb(109, 109, 109);
+    border-radius:8px;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    padding-top: 2rem;
+   
+    background-color: rgb(49, 49, 49);
+    color: rgba(255, 255, 255, 0.90);
+    transition: background-color 0.4s ease-in, color 0.5s ease-in;
+    
+}
+
+.article__heading, 
+.article h2.h2--large {
+    text-align: center;
+    font-size: 32px;
+    margin: 0.8rem;
+    border: 0;
+}
+
+.article h2 {
+    margin: 4.4rem 0 0rem 0;
+    border-bottom: 1px solid #555;
+    padding-bottom: 0.3rem;
+}
+
+
+.article > p {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    margin: 0.85rem;
+}
+
+.emoji {
+    display: inline;
+    width: 20px;
+}
+
+.emoji--rocket {
+    content: url(/img/emoji-rocket.PNG);
+}
+
+.code {
+    font-family: LucidaConsole, Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+    background-color: black;
+    color: white;
+    font-style: normal;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+.code p::selection,
+.code em::selection {
+    background: rgba(214, 172, 238, 0.273);
+    color: inherit;
+}
+
+.code::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+    height: 7px;
+}
+.code::-webkit-scrollbar-thumb {
+    border-radius: 1px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+.code::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 1px;
+    background-color: #F5F5F5;
+}
+
+
+.code::before {
+    content: 'bash shell';
+    background-color: rgb(55, 55, 55);
+    
+    
+    align-self: flex-start;
+    
+    color: rgb(184, 184, 184);
+    padding: 0.25rem 0.4rem 0.1rem 0.4rem;
+    border-radius: 6px 0px 6px 0;
+    font-size: 12px;
+}
+
+.code--html::before {
+    content: 'HTML';
+    color: rgb(255, 72, 0);
+    letter-spacing: 1px;
+}
+
+.code--js::before {
+   content: 'javascript';
+   color: yellow;
+}
+
+.code--json::before {
+    content: 'json';
+    color: rgb(93, 184, 93);
+}
+
+.code--file-struct::before {
+    content: '📁';
+    font-size: 20px;
+}
+
+.code p {
+    margin: 0.5rem 0 0.5rem 2rem;
+    display: inline-block;
+    flex: 0 0 100%;
+}
+
+.comnt {
+    color: rgb(123, 123, 123);
+}
+
+.orng {
+    color: orange;
+}
+
+.grn {
+    color: rgb(60, 162, 60);
+}
+
+.blu {
+    color: rgb(74, 189, 255);
+}
+
+.red {
+    color: rgb(246, 46, 83);
+}
+
+/** BUTTONS */
+
+.btn-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    position: relative;
+    z-index: 99;
+    width: 100%;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.577);
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 7px;
+    border: 1.5px solid rgb(0, 0, 0);
+    margin-top: 1rem;
+}
+
+.btn--important {
+    background-color: red;
+}
+
+.btn--more-info-box {
+    
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    background-color: #eeeeee;
+    background-color: #363232;
+
+    color: #202020;
+    color: rgba(255, 255, 255, 0.90);
+    position: relative;
+    top: -1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1.5px solid rgb(0, 115, 225);
+    animation: 0.5s ease-in-out;
+    transform-origin: top center;
+    transition: background-color 0.4s ease-in, color 0.5s ease-in;
+}
+
+.btn--more-info-box.hidden {
+    display: none;
+
+}
+
+@keyframes bounceDown {
+    0% {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    70% {
+        transform: scaleY(1.04);
+        opacity: 1;
+    }
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceUp {
+    0% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    
+    20% {
+        transform: scaleY(1.04);
+        opacity: 0.8;
+    }
+    
+    100% {
+        transform: scaleY(0);
+        opacity: 0.2;
+    }
+}
+
+.btn--more-info-box p {
+    text-align: left;
+}
+
+.btn--more-info-box h2 {
+    margin-top: 2.5rem;
+}
+
+.btn--more-info-box h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .nav-toggler {
+        position: fixed;
+        display: none;
+        visibility: hidden;
+    }
+}
+
+@media screen and (max-width: 778px) {
+    ul li {
+        padding: 0.8rem 0.3rem 0.5rem 0.8rem;
+    }
+    
+    li a {
+        font-size: 17px;
+    }
+
+    .nav {
+        margin: 0;
+        width: 100%;
+        height: 60px;
+        overflow: hidden;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        box-shadow: 1px 1px 1px 3px rgba(0, 0, 0, 0.179);
+    }
+
+    .nav-expanded {
+        width: 85%;
+        height: 100%;
+        overflow-y: auto;
+        box-shadow: 1px 1px 0px 700px rgba(0, 0, 0, 0.5);
+        border-bottom-left-radius: 0;
+    }
+
+    .nav-expanded .nav-toggler {
+        position: absolute;
+        transform: translateY(60px);
+    }
+
+    .logo-wrap {
+        place-self: center;
+        margin-bottom: 50px;
+        padding-right: var(--size--brightness-toggler);
+        padding-left: var(--size--brightness-toggler);
+    }
+    .logo__icon {
+        height: 40px;
+        width: 40px;
+    }
+    .dark-mode-toggler-wrap {
+        position: absolute;
+        top: 15px;
+        right: 10px;
+     
+    }
+    .nav-toggler {
+       width: 40px;
+       position: absolute;
+       left: 10px;
+       
+       transition: all 0.2s;
+    }
+
+    .logo__tag {
+        font-size: 22px;
+        white-space: nowrap;
+    }
+
+    .article-wrap {
+        margin: 0;
+        width: calc(100% - 0.5rem * 2);
+         padding: 0.5rem;
+         margin-top: 70px;
+     }
+     .article {
+        padding: 0.5rem;
+    }
+}
+
+.copyright::before {
+    content: '© 2023 - Ian Thai Smith ';
+    font-family: 'Times New Roman', Times, serif ;
+    display: flex;
+    justify-content: center;
+    
+}

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>🗃🚒Firestore Setup</title>
+  </head>
+  <body>
+    <!--!!!!!-->
+    <!--! MAIN-WRAP -->
+    <div class="main-wrap">
+      <section class="article-wrap">
+        <article class="article">
+          <h1 class="article__heading">
+            🗃️🚒 Setting Up Firestore on Firebase Console
+          </h1>
+          <button class="btn moreInfoBtn">Why Even Use Firestore?</button>
+          <div class="hidden btn--more-info-box">
+            <h1>
+              😱👾Don't get overwhelmed. These are just exposure examples.
+            </h1>
+            <!-- Firestore Advantages Section -->
+            <h2>Using Firestore for Enhanced Data Management 📊</h2>
+
+            <p>
+              Firestore, a powerful database solution, offers unparalleled
+              advantages for managing user profiles, comments, likes, and other
+              user-centric data in your project. Let's explore how to harness
+              its capabilities:
+            </p>
+
+            <!-- Structured Data Advantage -->
+            <h3>Structured Data 📂</h3>
+            <p>
+              Firestore excels in structuring data for easy query and
+              organization. Create collections and documents to represent
+              diverse data types, simplifying data management.
+            </p>
+
+            <!-- Scalability Advantage -->
+            <h3>Scalability 📈</h3>
+            <p>
+              Designed to scale with your application, Firestore handles growth
+              seamlessly. It ensures optimal performance even with an expanding
+              user base, making real-time features like live updates a breeze.
+            </p>
+
+            <!-- Advanced Querying Advantage -->
+            <h3>Advanced Querying 🧙‍♂️</h3>
+            <p>
+              Firestore empowers you with robust querying abilities. Filter and
+              sort data based on criteria, ideal for implementing search
+              functionality, displaying comments, or showcasing liked recipes.
+            </p>
+
+            <!-- Flexibility Advantage -->
+            <h3>Flexibility 🧘‍♂️</h3>
+            <p>
+              Beyond usernames, Firestore accommodates additional user-related
+              data like profile pictures and biographies. Adapt and expand your
+              data model as your application evolves.
+            </p>
+
+            <!-- Firestore Usage Examples Section -->
+            <h2>Firestore Usage Examples</h2>
+
+            <!-- User Profiles Example -->
+            <h3>User Profiles 🙋‍♂️</h3>
+            <p>
+              <strong>Creating a User Profile:</strong>
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="comnt"
+                  >// Create a user profile document during registration or
+                  login</em
+                >
+              </p>
+              <p>
+                <em class="blu">const</em> userDocRef =
+                <em class="red">doc</em>(db, <em class="grn">"users"</em>,
+                user.uid);
+              </p>
+              <p>
+                <em class="blu">await</em>
+                <em class="red">setDoc</em>(userDocRef, {
+              </p>
+              <p>username: <em class="grn">"user123"</em>,</p>
+              <p>
+                <em class="comnt"
+                  >// Add more user profile data like profile picture, bio,
+                  etc.</em
+                >
+              </p>
+              <p>});</p>
+              <br />
+              <p><em class="comnt">// Retrieve user profile data</em></p>
+              <p>
+                <em class="blu">const</em> userSnapshot =
+                <em class="blu">await</em>
+                <em class="red">getDoc</em>(userDocRef);
+              </p>
+              <p><em class="blu">const</em> userData = userSnapshot.data();</p>
+              <br />
+              <p><em class="comnt">// Update user profile data</em></p>
+              <p>
+                <em class="blu">await</em>
+                <em class="red">updateDoc</em>(userDocRef, {
+              </p>
+              <p>bio: <em class="grn">"I love cooking!"</em>,</p>
+              <p>});</p>
+            </div>
+
+            <!-- Comments Example -->
+            <h3>Comments 💬</h3>
+            <p>
+              <strong>Creating Comments:</strong>
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="comnt"
+                  >// Create a comment document linked to a recipe</em
+                >
+              </p>
+              <p>
+                <em class="blu">const</em> commentCollectionRef =
+                <em class="red">collection</em>(db,
+                <em class="grn">"recipes"</em>,
+                <em class="grn">"recipe123"</em>,
+                <em class="grn">"comments"</em>);
+              </p>
+              <p>
+                <em class="blu">await</em>
+                <em class="red">addDoc</em>(commentCollectionRef, {
+              </p>
+              <p>userId: user.uid,</p>
+              <p>content: <em class="grn">"This recipe is amazing!"</em>,</p>
+              <p>
+                timestamp: <em class="blu">new</em> <em class="red">Date</em>(),
+              </p>
+              <p>});</p>
+              <br />
+              <p><em class="comnt">// Retrieve comments for a recipe</em></p>
+              <p>
+                <em class="blu">const</em> commentsSnapshot =
+                <em class="blu">await</em>
+                <em class="red">getDocs</em>(commentCollectionRef);
+              </p>
+              <p>
+                <em class="blu">const</em> comments =
+                commentsSnapshot.docs.map((doc) => doc.data());
+              </p>
+            </div>
+
+            <!-- Likes Example -->
+            <h3>Likes ❤️</h3>
+            <p>
+              <strong>Recording Likes:</strong>
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="comnt"
+                  >// Create a like document to track user likes for a
+                  recipe</em
+                >
+              </p>
+              <p>
+                <em class="blu">const</em> likeCollectionRef =
+                <em class="red">collection</em>(db,
+                <em class="grn">"recipes"</em>,
+                <em class="grn">"recipe456"</em>, <em class="grn">"likes"</em>);
+              </p>
+              <p>
+                <em class="blu">await</em>
+                <em class="red">addDoc</em>(likeCollectionRef, {
+              </p>
+              <p>userId: user.uid,</p>
+              <p>
+                timestamp: <em class="blu">new</em> <em class="red">Date</em>(),
+              </p>
+              <p>});</p>
+              <br />
+              <p>
+                <em class="comnt">// Get the number of likes for a recipe</em>
+              </p>
+              <p>
+                <em class="blu">const</em> likesSnapshot =
+                <em class="blu">await</em>
+                <em class="red">getDocs</em>(likeCollectionRef);
+              </p>
+              <p><em class="blu">const</em> likeCount = likesSnapshot.size;</p>
+            </div>
+
+            <!-- Conclusion Section -->
+            <h2>Conclusion</h2>
+
+            <!-- Recap of Techniques -->
+            <h3>Recap of Techniques 📝</h3>
+            <p>
+              <strong>Modifying HTML Elements:</strong> For minor changes within
+              existing elements.
+            </p>
+            <p>
+              <strong>Injecting New HTML Code:</strong> For replacing entire
+              sections or integrating static content.
+            </p>
+            <p>
+              <strong>Dynamic Class Insertion:</strong> For controlling element
+              visibility or behavior based on user authorization.
+            </p>
+
+            <!-- Best Practices -->
+            <h3>Best Practices 🌟</h3>
+            <p>
+              - Prioritize security by validating and sanitizing injected HTML.
+            </p>
+            <p>- Consider the performance impact of your choice.</p>
+            <p>
+              - Balance the methods for an efficient and user-friendly web
+              application.
+            </p>
+
+            <!-- Next Steps -->
+            <h3>Next Steps 🚀</h3>
+            <p>
+              Apply the techniques to your web application, enhancing user
+              experience and adaptability.
+            </p>
+
+            <p>
+              By following this enriched tutorial with code examples, you now
+              possess the knowledge and practical skills to create a dynamic web
+              application that adapts seamlessly to user authentication status
+              using Firebase. Your website will shine with personalized touches
+              and a visually appealing design! 🌟🖥️🎨
+            </p>
+          </div>
+          <button class="btn moreInfoBtn">Firestore's Datastructure</button>
+          <div class="hidden btn--more-info-box">
+            <p>
+              <b
+                >If you have never seen this before prepare for confusion. If
+                you have seen this before and are trying to understand, just
+                keep going over it.</b
+              >
+            </p>
+            <h1>📂 Organizing Data in Firestore</h1>
+
+            <p>
+              In Firestore, data is organized in a hierarchical structure as
+              follows:
+            </p>
+
+            <p>
+              1. <strong>Collections</strong>: Collections are containers for
+              organizing related documents. You can think of collections as
+              similar to tables in a traditional relational database or as
+              folders in a file system. Collections can contain documents and,
+              optionally, other subcollections.
+            </p>
+
+            <p>
+              2. <strong>Documents</strong>: Documents are individual pieces of
+              data within a collection. You can think of documents as similar to
+              rows in a table or as individual files in a folder. Each document
+              contains fields, which are key-value pairs representing the data.
+            </p>
+
+            <p>
+              3. <strong>Fields</strong>: Fields are the actual data within a
+              document. Fields can hold various types of data, including
+              strings, numbers, arrays, maps, and references to other documents
+              or subcollections.
+            </p>
+
+            <p>
+              4. <strong>Subcollections</strong>: Documents can also contain
+              subcollections. This allows for a nested structure, similar to
+              having collections within collections. Subcollections can contain
+              their own documents, and the nesting can continue as needed.
+            </p>
+
+            <p>Here's a visual representation:</p>
+
+            <div class="code code--file-struct">
+              <p>- Collection: "recipes"</p>
+              <p>&nbsp;&nbsp;- Document: "recipe123"</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;- Field: "title" -> "Spaghetti
+                Carbonara"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;- Field: "ingredients" -> ["Pasta",
+                "Eggs", "Bacon"]
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Subcollection: "comments"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Document:
+                "comment456"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+                Field: "user" -> "user789"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+                Field: "text" -> "Delicious!"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Document:
+                "comment789"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+                Field: "user" -> "user123"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-
+                Field: "text" -> "I love this recipe!"
+              </p>
+              <p>&nbsp;&nbsp;- Document: "recipe456"</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Field: "title" ->
+                "Chocolate Cake"
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Field: "ingredients" ->
+                ["Flour", "Sugar", "Cocoa"]
+              </p>
+            </div>
+
+            <p>In the example above:</p>
+
+            <p>- "recipes" is a collection.</p>
+            <p>
+              - "recipe123" and "recipe456" are documents within the "recipes"
+              collection.
+            </p>
+            <p>
+              - Each document contains fields like "title," "ingredients," and
+              subcollections like "comments."
+            </p>
+            <p>
+              - "comments" is a subcollection within each recipe document, and
+              it contains its own documents representing comments.
+            </p>
+
+            <p>
+              This hierarchical structure allows you to organize data
+              efficiently and represent complex relationships in your
+              application. You can query, retrieve, and manipulate data at any
+              level of this structure to meet your application's needs.
+              Firestore's flexibility in handling nested collections and
+              documents is one of its strengths for structuring and querying
+              data.
+            </p>
+          </div>
+
+          <!--^      STEP ONE          **********************************************************-->
+          <h2>Step 1: Access the Firebase Console 🖥️</h2>
+          <p>
+            1. Navigate to the Firebase Console by visiting
+            <a href="https://console.firebase.google.com/" target="_blank"
+              >https://console.firebase.google.com/</a
+            >.
+          </p>
+          <p>
+            2. Sign in with your Google account if you're not already logged in.
+          </p>
+
+          <h2>Step 2: Create a New Firebase Project 🚀</h2>
+          <p>
+            - If you don't have an existing Firebase project, click on the "Add
+            project" button.
+          </p>
+          <p>
+            - Follow the on-screen instructions to name your project and choose
+            a billing plan if required (Firestore has a free tier).
+          </p>
+
+          <h2>Step 3: Select Your Project 📂</h2>
+          <p>
+            - Once your project is created, select it from the Firebase Console
+            dashboard.
+          </p>
+
+          <h2>Step 4: Initialize Firestore 📦</h2>
+          <p>
+            1. In the Firebase Console, click on "Firestore" from the left-hand
+            sidebar.
+          </p>
+          <p>2. Click on the "Create Database" button.</p>
+          <p>
+            3. Choose the geographic location where you want to host your
+            Firestore database. Consider selecting a location close to your
+            target audience for better performance. Click "Next."
+          </p>
+          <p>
+            4. Set the security rules for your Firestore database. While you can
+            start with default rules for development, it's essential to define
+            specific rules for production to protect your data. Click "Next."
+          </p>
+          <p>5. Review your settings, and when you're ready, click "Create."</p>
+
+          <h2>Step 5: Implement Firestore in Your Code Dynamically 💻</h2>
+          <p>
+            - Firestore allows you to create collections and store data
+            dynamically in your code. You do not need to perform any specific
+            setup in the Firebase Console for this step.
+          </p>
+
+          <p>
+            Congratulations! You've successfully configured Firestore for your
+            Firebase project. You can now dynamically create collections and
+            store data in Firestore using your web application's code. If you
+            have more questions or need further assistance, feel free to ask!
+            🌟🎉
+          </p>
+        </article>
+      </section>
+    </div>
+    <!--! MAIN-WRAP -->
+    <!--! !!!!!!! -->
+    <script src="/JS/dynamic-nav.js"></script>
+    <script src="/JS/dropdown-more-info.js"></script>
+  </body>
+</html>

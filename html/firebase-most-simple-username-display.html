@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>👤🍰Easy Username Display</title>
+  </head>
+  <body>
+    <!--!!!!!-->
+    <!--! MAIN-WRAP -->
+    <div class="main-wrap">
+      <section class="article-wrap">
+        <article class="article">
+          <h1 class="article__heading">
+            👤🍰The Most Simple Way to Display a Username With Firebase🔥
+          </h1>
+          <h2>Step 1: 🚚Import The Functions</h2>
+          <br />
+          <div class="code code--js">
+            <p>
+              <em class="blu">import</em> {<em class="red"> updateProfile</em> }
+              <em class="blu">from</em> <em class="grn">'./firebase'</em>;
+            </p>
+          </div>
+          <h2>Step 2: 🔡Grab Input From a Username Input Field</h2>
+          <div class="code code--js">
+            <p>
+              <em class="blu">const</em> username = document.getElementById(<em
+                class="grn"
+                >"username"</em
+              >).value;
+            </p>
+            <p>
+              <em class="blu">const</em> email = document.getElementById(<em
+                class="grn"
+                >"email"</em
+              >).value;
+            </p>
+            <p>
+              <em class="blu">const</em> password = document.getElementById(<em
+                class="grn"
+                >"password"</em
+              >).value;
+            </p>
+          </div>
+          <h2>Step 3: 🕑Directly After 'createUserWithEmailAndPassword();'</h2>
+          <br />
+          <div class="code">
+            <p>
+              <em class="blu">await</em>
+              <em class="red">updateProfile</em>(userCredential.user, {
+              <br />
+              <br />
+              &nbsp;&nbsp;&nbsp;&nbsp;displayName: username,
+              <br />
+              <br />
+              });
+            </p>
+          </div>
+          <p>After this is where we would send email verification.</p>
+          <h2>Step 4: 📝Display the Username</h2>
+          <p>Right after sending the verification email:</p>
+          <div class="code code--js">
+            <p>
+              <em class="blu">let</em> htmlString =
+              <em class="grn">
+                <strong>`</strong>&lt;h1&gt; ${username}&lt;/h1&gt;<strong
+                  >`</strong
+                ></em
+              >;
+            </p>
+
+            <em class="comnt"
+              >// Get the container element const container =</em
+            >
+            <p>document.querySelector(<em class="grn">'.user-name'</em>);</p>
+            <em class="comnt">// Insert the HTML string into the container</em>
+            <p>container.innerHTML = htmlString;</p>
+          </div>
+          <h2>Step 5: 🏁Finally, Check If User Is Signed In or Not</h2>
+          <p>If they are show the username, if not say 'Logged Off'</p>
+          <div class="code code--js">
+            <p><em class="blu">var</em> htmlString;</p>
+            <p>auth.<em class="red">onAuthStateChanged</em>((user) => {</p>
+            <p><em class="blu">if</em> (user) {</p>
+            <p>console.log(<em class="grn">'User is signed in'</em>);</p>
+            <p>
+              console.log(<em class="grn">'Username: '</em> + user.displayName);
+            </p>
+            <p class="em comnt">// Display the username in your application</p>
+            <p>
+              htmlString =
+              <em class="grn">`&lt;h1&gt;${user.displayName}&lt;/h1&gt;`</em>;
+            </p>
+
+            <pem class="comnt">// Get the container element</pem>
+
+            <p>
+              const container = document.querySelector<em class="grn"
+                >('.user-name'</em
+              >);
+            </p>
+
+            <p class="em comnt">// Insert the HTML string into the container</p>
+
+            <p>container.innerHTML = htmlString;</p>
+            <p>} <em class="blu">else</em> {</p>
+            <p>console.log(<em class="grn">'No user is signed in'</em>);</p>
+            <p>
+              htmlString =
+              <em class="grn">`&lt;h1&gt;Logged Out&lt;/h1&gt;`</em>;
+            </p>
+
+            <p><em class="comnt">// Get the container element</em></p>
+
+            <p>
+              <em class="blu">const</em> container = document.querySelector(<em
+                class="grn"
+                >'.user-name'</em
+              >);
+            </p>
+
+            <p>
+              <em class="comnt"
+                >// Insert the HTML string into the container</em
+              >
+            </p>
+
+            <p>container.innerHTML = htmlString;</p>
+            <p>}</p>
+            <p>});</p>
+          </div>
+          <p>
+            This is the most basic way to achieve this functionality. If you
+            want a site where the user can make profiles and create items, like,
+            comment... Then you will find it better using the firestore db,
+            which we will cover next.
+          </p>
+          <button class="btn moreInfoBtn">
+            Require Username for Account Creation
+          </button>
+          <div class="hidden btn--more-info-box">
+            <h3>Simply add these conditions to your create user function</h3>
+            <div class="code">
+              <p>async function CreateUser() {</p>
+              <br />
+              <p>createUserBtn.addEventListener('click', async (e) => {</p>
+              <p>e.preventDefault();</p>
+              <br />
+              <p>const username = document.getElementById("username").value;</p>
+              <p>const email = document.getElementById("email").value;</p>
+              <p>const password = document.getElementById("password").value;</p>
+              <br />
+              <p>
+                <em class="grn"
+                  >if(!auth.currentUser && username !== null && username.trim()
+                  !== ""){</em
+                >
+              </p>
+              <br />
+              <p>try {</p>
+              <p>
+                <em class="comnt"
+                  >// Create a new user with email and password</em
+                >
+              </p>
+              <p>userCredential = await createUserWithEmailAndPassword(</p>
+              <p>auth,</p>
+              <p>email,</p>
+              <p>password</p>
+              <p>);</p>
+              <p><em class="comnt">// Add the username to user data</em></p>
+              <p>await updateProfile(userCredential.user, {</p>
+              <p>displayName: username,</p>
+              <p>});</p>
+              <br />
+              <br />
+              <p>let htmlString = `&lt;h1&gt;${username}&lt;/h1&gt;`;</p>
+
+              <p><em class="comnt">// Get the container element</em></p>
+
+              <p>const container = document.querySelector('.user-name');</p>
+
+              <p>
+                <em class="comnt"
+                  >// Insert the HTML string into the container</em
+                >
+              </p>
+              <br />
+              <p>container.innerHTML = htmlString;</p>
+              <p><em class="comnt">// Send email verification</em></p>
+              <p>await sendEmailVerification(userCredential.user);</p>
+              <p>
+                <em class="comnt"
+                  >// Inform the user to check their email for verification</em
+                >
+              </p>
+              <p>
+                alert("CREATED: " + username + "!!! Please check your email for
+                verification.💌📬");
+              </p>
+              <p>
+                <em class="comnt">
+                  // Optionally, redirect the user to a verification page or log
+                  them in immediately
+                </em>
+              </p>
+
+              <p><em class="comnt">// Your HTML string</em></p>
+              <p>}</p>
+              <p>catch (error) {</p>
+              <p>console.error("Registration error:", error.message);</p>
+              <p>alert("‼🧨💣‼ERR: " + error);</p>
+              <p>}</p>
+              <br />
+              <p><em class="grn">}</em></p>
+              <p><em class="grn">else if(auth.currentUser){</em></p>
+              <p>
+                alert("📗You already have an account and are logged in!!👍")
+              </p>
+              <p>
+                <em class="grn"
+                  >} else if(username === null || username.trim() === "") {</em
+                >
+              </p>
+              <p>alert('🚫😲you forgot to create a username!!!!!🤯');</p>
+              <p><em class="grn">}</em></p>
+              <br />
+              <p>});</p>
+              <p>}</p>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+    <!--! MAIN-WRAP -->
+    <!--! !!!!!!! -->
+    <script src="/JS/dynamic-nav.js"></script>
+    <script src="/JS/dropdown-more-info.js"></script>
+  </body>
+</html>

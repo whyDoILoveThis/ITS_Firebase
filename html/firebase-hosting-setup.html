@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>🔥Firebase Hosting Setup</title>
+  </head>
+  <body>
+    <!--!!!!!-->
+    <!--! MAIN-WRAP -->
+    <div class="main-wrap">
+      <section class="article-wrap">
+        <article class="article">
+          <h1 class="article__heading">🔥 Setting Up Hosting with Firebase</h1>
+
+          <h2>Step 1: Prerequisites 🛠️</h2>
+
+          <strong>Before you start, ensure you have the following:</strong>
+
+          <p>- A Google account.</p>
+          <p>
+            - Node.js and npm (Node Package Manager) installed on your computer.
+          </p>
+          <p>
+            - A Firebase project created in the Firebase Console (<a
+              href="https://console.firebase.google.com/"
+              target="_blank"
+              >https://console.firebase.google.com/</a
+            >).
+          </p>
+          <h2>Step 2: Install Firebase CLI 🔌</h2>
+
+          <p>1. Open your terminal or command prompt.</p>
+
+          <p>
+            2. Install the Firebase CLI globally by running the following
+            command:
+          </p>
+
+          <div class="code">
+            <p>npm install -g firebase-tools</p>
+          </div>
+
+          <p>
+            3. After installation, verify that the Firebase CLI is working by
+            running:
+          </p>
+
+          <div class="code">
+            <p>firebase --version</p>
+          </div>
+
+          <p>This should display the installed version of the Firebase CLI.</p>
+
+          <h2>Step 3: Log in to Firebase 🔒</h2>
+
+          <p>1. In your terminal, run:</p>
+
+          <div class="code">
+            <p>firebase login</p>
+          </div>
+
+          <p>
+            2. This will open a browser window asking you to log in with your
+            Google account. After logging in, return to the terminal.
+          </p>
+
+          <p>
+            3. You should see a message that you are now authenticated with
+            Firebase.
+          </p>
+
+          <h2>Step 4: Initialize Firebase in Your Project 🚀</h2>
+
+          <p>
+            1. Navigate to the root folder of your web project using the
+            terminal.
+          </p>
+
+          <p>2. Initialize Firebase Hosting by running:</p>
+
+          <div class="code">
+            <p>firebase init hosting</p>
+          </div>
+
+          <p>3. Follow the prompts:</p>
+
+          <div class="code">
+            <p>
+              - <strong>Select a Firebase project</strong>: Choose the Firebase
+              project you created earlier.
+            </p>
+            <p>
+              -
+              <strong>What do you want to use as your public directory?</strong
+              >: Enter the folder that contains your web app's static files
+              (e.g., <code>public</code> or <code>dist</code>).
+            </p>
+            <p>
+              - <strong>Configure as a single-page app? (y/N)</strong>: If your
+              app is a single-page app (e.g., using a frontend framework like
+              React or Vue.js), you can choose "Y" to configure it as a
+              single-page app. Otherwise, choose "N."
+            </p>
+          </div>
+
+          <p>
+            4. Firebase will create a <code>firebase.json</code> configuration
+            file in your project's root folder.
+          </p>
+
+          <h2>Step 5: Deploy Your App 🚀</h2>
+
+          <p>
+            1. Build your web app if necessary. This step depends on your
+            project's build tools. For example, if you're using a tool like
+            Parcel, you might run:
+          </p>
+
+          <div class="code">
+            <p>npm run build</p>
+          </div>
+
+          <p>2. Deploy your app to Firebase Hosting by running:</p>
+
+          <div class="code">
+            <p>firebase deploy</p>
+          </div>
+
+          <p>
+            3. Firebase will upload your files to the cloud and provide you with
+            a hosting URL. Your site is now live!
+          </p>
+
+          <h2>Step 6: Configure Custom Domain (Optional) 🌐</h2>
+
+          <p>
+            If you want to use a custom domain (e.g., www.yourdomain.com),
+            follow these steps:
+          </p>
+
+          <p>1. In the Firebase Console, go to your project settings.</p>
+          <p>2. Under the "Hosting" tab, click on "Add custom domain."</p>
+          <p>
+            3. Follow the instructions to verify domain ownership and set up DNS
+            records with your domain registrar.
+          </p>
+          <p>
+            4. Once verified, you can associate your custom domain with your
+            Firebase Hosting site.
+          </p>
+
+          <h2>Step 7: Continuous Deployment (Optional) 🔄</h2>
+
+          <p>
+            To set up continuous deployment with services like GitHub Actions or
+            CircleCI, you can create deployment scripts that automate the
+            deployment process whenever you push changes to your code
+            repository.
+          </p>
+
+          <h2>Step 8: Monitoring and Analytics (Optional) 📈</h2>
+
+          <p>
+            Firebase Hosting integrates seamlessly with Firebase services like
+            Firebase Analytics and Firebase Performance Monitoring, allowing you
+            to monitor your site's performance and user behavior.
+          </p>
+
+          <h2>Step 9: Test and Debug 🔍</h2>
+
+          <p>
+            Thoroughly test your hosted site to ensure everything works as
+            expected. Firebase Hosting provides features for rolling back to
+            previous versions if needed.
+          </p>
+
+          <p>
+            Congratulations! You've successfully set up hosting with Firebase.
+            Your web application is now live and accessible to the world.
+            Continue to improve and expand your app, and consider exploring
+            Firebase's other services to enhance your project further.
+          </p>
+          <button class="btn moreInfoBtn">The Other Services</button>
+          <div class="hidden btn--more-info-box">
+            <h1>🔥 Including Firebase in Your Web Application</h1>
+            <h3>
+              First you must run this in the terminal for your project root
+              directory.
+            </h3>
+            <div class="code"><p>npm install firebase</p></div>
+            <h2>Navigate to project settings in firebase ⚙️</h2>
+            <p>
+              You will find the following code containing the information unique
+              to your project.
+            </p>
+            <br />
+            <div class="code">
+              <p>
+                import { &nbsp;<em class="red">initializeApp</em> } from
+                "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+              </p>
+              <p>
+                import { <em class="red">getAnalytics</em> } from
+                "https://www.gstatic.com/firebasejs/9.4.0/firebase-analytics.js";
+              </p>
+              <br />
+              <p>const firebaseConfig = {</p>
+
+              <p>apiKey: "YOurAPIkeywiLLlookSomeThiNGlikethis",</p>
+              <p>authDomain:"your-project-name.firebaseapp.com",</p>
+              <p>projectId: "your-project-name",</p>
+              <p>storageBucket: "your-project-name.appspot.com",</p>
+              <p>messagingSenderId: "89274982173",</p>
+              <p>appId: "1:34523452345:web:wer23542342wer3453222",</p>
+              <p>measurementId: "R-DHHSGSDG",</p>
+              <p>};</p>
+              <br />
+              <p>
+                const app =<em class="red">initializeApp</em>(firebaseConfig);
+              </p>
+              <p>const analytics = <em class="red">getAnalytics</em>(app);</p>
+            </div>
+            <p>
+              You would need to add Firebase using the configuration (as you see
+              in the code snippet) when you want to use Firebase services other
+              than hosting in your web application. Firebase offers a wide range
+              of services like Realtime Database, Firestore, Authentication,
+              Cloud Functions, and more. To interact with these services from
+              your web app, you'll need to include the Firebase SDK and
+              initialize it with your Firebase project's configuration.
+            </p>
+
+            <h3>
+              Here's when you should include Firebase in your web application:
+            </h3>
+
+            <p>
+              1. <strong>Firebase Services</strong>: If you plan to use any
+              Firebase services like Realtime Database, Firestore,
+              Authentication, Cloud Storage, etc., you should include Firebase
+              SDK and initialize it with your configuration. This allows your
+              web application to communicate with these Firebase services.
+            </p>
+
+            <p>
+              2. <strong>Authentication</strong>: If you want to implement user
+              authentication using Firebase Authentication, you'll need to
+              include Firebase and set it up with your Firebase project
+              configuration. This enables you to handle user sign-up, sign-in,
+              and other authentication-related features.
+            </p>
+
+            <p>
+              3. <strong>Realtime Database or Firestore</strong>: If you're
+              using Firebase's NoSQL databases (Realtime Database or Firestore)
+              to store and retrieve data, you'll need to include Firebase SDK
+              and configure it with your project credentials.
+            </p>
+
+            <p>
+              4. <strong>Cloud Functions</strong>: If you plan to use Firebase
+              Cloud Functions, you'll need to include Firebase in your functions
+              code to interact with your Firebase project.
+            </p>
+
+            <p>
+              5. <strong>Cloud Storage</strong>: When working with Firebase
+              Cloud Storage to store and retrieve files, you'll need to include
+              Firebase and configure it.
+            </p>
+
+            <p>
+              6. <strong>Analytics and Performance Monitoring</strong>: If you
+              want to track user analytics and monitor your app's performance
+              using Firebase Analytics and Firebase Performance Monitoring,
+              you'll include Firebase SDK to enable these features.
+            </p>
+
+            <p>
+              In contrast, Firebase Hosting primarily handles the hosting and
+              serving of your static web content (HTML, CSS, JavaScript, images,
+              etc.). It doesn't require you to include Firebase SDK
+              initialization in your frontend code because it focuses on serving
+              content rather than interacting directly with Firebase services.
+              Firebase Hosting automatically uses the Firebase project
+              configuration associated with your project when you deploy your
+              web application, making it easier to manage and separate from your
+              application logic.
+            </p>
+
+            <p>
+              So, in short, you include Firebase SDK and initialize it with your
+              Firebase project configuration when you need to use Firebase
+              services other than just hosting in your web application.
+            </p>
+          </div>
+        </article>
+      </section>
+    </div>
+    <!--! MAIN-WRAP -->
+    <!--! !!!!!!! -->
+    <script src="/JS/dynamic-nav.js"></script>
+    <script src="/JS/dropdown-more-info.js"></script>
+  </body>
+</html>

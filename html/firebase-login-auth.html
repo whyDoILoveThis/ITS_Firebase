@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Firebase Login Auth</title>
+  </head>
+  <body>
+    <!--!!!!!-->
+    <!--! MAIN-WRAP -->
+    <div class="main-wrap">
+      <section class="article-wrap">
+        <article class="article">
+          <h1 class="article__heading">
+            🔐Getting Started with Firebase User Authentication
+          </h1>
+          <h2>
+            ⚠️Use of the global firebase object was depricated in
+            Firebase-v9.4.0⚠️
+          </h2>
+          <p><b>🔴This means that any code you find like this:</b></p>
+          <div class="code code--js">
+            <p>if (<em class="red">firebase.</em>auth().currentUser)</p>
+          </div>
+          <p><b>🔴 OR THIS:</b></p>
+          <div class="code code--js">
+            <p><em class="red">firebase.</em>initializeApp(firebaseConfig)</p>
+            <p><em class="red">firebase.</em>analytics();</p>
+          </div>
+          <p><b>🔴IT WILL. NOT. WORK😡</b></p>
+          <p>
+            🟢Instead, use the modular approach in the following steps and
+            forget the global firebase object ever was a thing.💚
+          </p>
+          <button class="btn moreInfoBtn btn--important">
+            Easily convert old code into modern format
+          </button>
+          <div class="hidden btn--more-info-box">
+            <h2>
+              AFTER creating a dedicated export module as described on the rest
+              of this webpage...
+            </h2>
+            <h3>🔴DON'T do this.</h3>
+            <div class="code code--js">
+              <p><em class="comnt">// Get the sign-out button element</em></p>
+              <p>const signOutBtn = document.getElementById('sign-out');</p>
+              <p></p>
+              <p>
+                <em class="comnt"
+                  >// Add a click event listener to the sign-out button</em
+                >
+              </p>
+              <p>signOutBtn.addEventListener('click', () => {</p>
+              <p></p>
+              <p><em class="comnt">// Sign out the user with Firebase</em></p>
+              <p><em class="red">firebase.auth().signOut()</em></p>
+              <p>.then(() => {</p>
+              <p></p>
+              <p><em class="comnt">// User signed out successfully.</em></p>
+              <p>console.log('User signed out');</p>
+              <p></p>
+              <p>})</p>
+              <p>.catch((error) => {</p>
+              <p></p>
+              <p><em class="comnt">// Handle sign-out errors here.</em></p>
+              <p>console.error('Sign-out error', error);</p>
+              <p></p>
+              <p>});</p>
+            </div>
+            <h3>🟢DO THIS</h3>
+            <div class="code code--js">
+              <p>
+                <em class="comnt"
+                  >// Assuming you have a dedicated import module called
+                  'firebase.js'</em
+                >
+              </p>
+              <p>
+                <em class="grn"
+                  >import { auth, signOut } from './firebase.js';
+                </em>
+              </p>
+              <p></p>
+              <p><em class="comnt">// Get the sign-out button element</em></p>
+              <p>const signOutBtn = document.getElementById('sign-out');</p>
+              <p></p>
+              <p>
+                <em class="comnt"
+                  >// Add a click event listener to the sign-out button</em
+                >
+              </p>
+              <p>signOutBtn.addEventListener('click', () => {</p>
+              <p></p>
+              <p><em class="comnt">// Sign out the user with Firebase</em></p>
+              <p><em class="grn">signOut(auth)</em></p>
+              <p>.then(() => {</p>
+              <p></p>
+              <p><em class="comnt">// User signed out successfully.</em></p>
+              <p>console.log('User signed out');</p>
+              <p></p>
+              <p>})</p>
+              <p>.catch((error) => {</p>
+              <p></p>
+              <p><em class="comnt">// Handle sign-out errors here.</em></p>
+              <p>console.error('Sign-out error', error);</p>
+              <p></p>
+              <p>});</p>
+            </div>
+            <button class="btn moreInfoBtn">
+              So, in essance, <br />
+              we discard 'firebase.' and then use 'auth' for the parameter of
+              the auth&NoBreak;-&NoBreak;function we want to use, after
+              importing the neccessary functions?
+            </button>
+            <div class="hidden btn--more-info-box">
+              <p>
+                <strong
+                  >Yes, that's correct! In the modern Firebase modular
+                  approach:</strong
+                >
+              </p>
+
+              <p>
+                <strong>Step 1:</strong><br />
+                You import the necessary Firebase functions and objects,
+                typically from a dedicated module like firebase.js.
+              </p>
+
+              <p>
+                <strong>Step 2:</strong><br />
+                When using a specific Firebase function, you pass the Firebase
+                instance (e.g., auth, database, firestore, etc.) as the first
+                parameter of that function.
+              </p>
+
+              <p>
+                <strong>Step 3:</strong><br />
+                The Firebase instance (e.g., auth) is initialized in a separate
+                module, and can be reused throughout your code.
+              </p>
+
+              <p>
+                This approach helps modularize your code, making it more
+                organized and easier to maintain, and it aligns with modern
+                JavaScript module practices.
+              </p>
+            </div>
+          </div>
+          <button class="btn moreInfoBtn">Why the above isn't obvious</button>
+          <div class="hidden btn--more-info-box">
+            <p>
+              So, the Firebase team had introduced the modular SDK approach but
+              didn't provide a single, official document detailing the changes
+              explicitly. The transition to the modular SDK was communicated
+              through release notes, blog posts, and community discussions.
+            </p>
+            <p>
+              To get the most accurate and up-to-date information, I recommend
+              referring to the official Firebase documentation and the Firebase
+              GitHub repository.
+            </p>
+            <p>
+              <b> Here's how you can find information on this topic: </b>
+            </p>
+            <p>
+              <b>Firebase Documentation:</b> Visit the
+              <a href="https://firebase.google.com/docs"
+                >Firebase Documentation</a
+              >
+              and look for the specific documentation for your chosen Firebase
+              service (e.g., Firebase Authentication, Realtime Database,
+              Firestore, etc.). The documentation usually provides guidance on
+              how to use the modular SDK.
+            </p>
+            <p>
+              <b>Firebase Blog:</b> Check the
+              <a href="https://firebase.blog/">Firebase Blog</a> for
+              announcements, updates, and articles related to Firebase changes
+              and best practices.
+            </p>
+            <p>
+              <b>Firebase GitHub Repository:</b> Explore the
+              <a href="https://github.com/firebase">
+                Firebase GitHub repository
+              </a>
+              for Firebase libraries. The repository often contains code
+              samples, issues, and discussions related to Firebase updates and
+              changes.
+            </p>
+            <p>
+              Firebase Release Notes: Review the
+              <a href="https://firebase.google.com/support/releases"
+                >Firebase Release Notes</a
+              >
+              for updates on Firebase SDK releases. The release notes may
+              include information on changes and migrations.
+            </p>
+            <p>
+              Please note that Firebase's documentation and resources may have
+              evolved since my last update in September 2021. It's essential to
+              refer to the latest Firebase documentation and community
+              discussions for the most accurate and current information
+              regarding the modular SDK approach and best practices.
+            </p>
+          </div>
+          <button class="btn moreInfoBtn">More about finding docs</button>
+          <div class="hidden btn--more-info-box">
+            <p>
+              Firebase documentation has historically been comprehensive, but
+              it's possible that specific details related to changes, especially
+              in the transition to the modular SDK approach, may not always be
+              immediately apparent or easily accessible in a centralized
+              document.
+            </p>
+            <p>
+              The Firebase team continually works to improve their documentation
+              and provide clear information to developers. However, it's not
+              uncommon for platform changes to require some exploration and
+              cross-referencing across documentation, release notes, blog posts,
+              and community discussions to get a complete understanding.
+            </p>
+            <p>
+              As a developer, it's essential to stay engaged with the Firebase
+              community, be aware of updates, and be prepared to adapt to
+              changes in software platforms. If you encounter difficulties or
+              have questions, don't hesitate to seek help from the Firebase
+              community or forums, where experienced developers often share
+              their insights and solutions.
+            </p>
+            <p>
+              While navigating through documentation and finding specific
+              details may sometimes require effort, it's part of the process of
+              staying up-to-date with evolving technologies. Your feedback and
+              experience can also be valuable in shaping the future
+              documentation and making it more user-friendly.
+            </p>
+          </div>
+
+          <h2>Step 1: Create a Firebase Project 🏗️</h2>
+
+          <p>
+            Go to the Firebase Console (https://console.firebase.google.com/).
+          </p>
+          <p>Click on the "Add Project" button.</p>
+          <p>
+            Give your project a name and select your region. Click "Continue."
+          </p>
+
+          <h2>Step 2: Set Up Firebase in Your Project 🔌</h2>
+
+          <p>
+            After creating your project, click on "Web" to add a new web app to
+            your project.
+          </p>
+          <p>Register your app by giving it a nickname.</p>
+          <p>
+            <b>
+              Firebase will provide you with a config object containing API keys
+              and other credentials. Keep this safe; you'll need it later.
+            </b>
+          </p>
+
+          <p></p>
+
+          <h2>Step 3: Initialize Firebase in Your Project 🚀</h2>
+          <p>
+            <b>
+              You should always create a dedicated module to centralize Firebase
+              imports.
+            </b>
+          </p>
+
+          <p>
+            That means, create a separate JavaScript module (e.g., firebase.js)
+            responsible for initializing Firebase and exporting the Firebase
+            services you'll use across your application.
+          </p>
+
+          <p style="margin-bottom: 0">
+            <b>🛑✋HEAR YE HEAR YE🤚🛑</b>
+            <br />
+            IF YOU DO NOT BUNDLE WITH PARCEL OR SOME OTHER BUNDLER YOU WILL GET
+            AN ERR IF YOU DO NOT USE CDN PATHS.
+            <b>No bundler? Use CDN, or get an ERR</b>
+          </p>
+          <button style="margin-top: 0" class="btn moreInfoBtn btn--important">
+            No bundler? Err without CDN
+          </button>
+          <div class="hidden btn--more-info-box">
+            <h2>📦Bundler</h2>
+            <p>
+              If your files are ready and you have parcel globally installed
+              run:
+            </p>
+            <div class="code">
+              <p>parcel build index.html</p>
+            </div>
+            <p>
+              If you want to build and open a localhost server at the same time,
+              you can:
+            </p>
+            <div class="code">
+              <p>parcel index.html</p>
+            </div>
+            <p>
+              <b
+                >⚠️If you run index.html with anything(e.g. LiveServer
+                extension) other than your build tool it will not work because
+                it has to run out of the dist folder to access the relative
+                paths like this:
+              </b>
+            </p>
+            <div class="code code--js">
+              <p>
+                <em class="blu">import</em> {<em class="red">initializeApp</em>
+                } from <em class="grn">'firebase/app'</em>;
+              </p>
+              <p>
+                <em class="blu">import</em> {
+                <em class="red">getAnalytics</em> } from
+                <em class="grn">'firebase/analytics'</em>;
+              </p>
+              <p><em class="blu">import </em>{</p>
+              <p><em class="red">getAuth</em>,</p>
+              <p><em class="red">createUserWithEmailAndPassword</em>,</p>
+              <p><em class="red">sendEmailVerification</em>,</p>
+              <p>} from <em class="grn">'firebase/auth'</em>;</p>
+            </div>
+            <h2>🌐CDN</h2>
+            <h3>
+              <b
+                >🚨If you are NOT using a bundler (e.g. parcel or webpack), you
+                absolutely must use CDN paths like this:</b
+              >
+            </h3>
+            <div class="code code--js">
+              <p>
+                <em class="blu">import</em> {<em class="red">initializeApp</em>
+                } from
+                <em class="grn"
+                  >'https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js'</em
+                >;
+              </p>
+              <p>
+                <em class="blu">import</em> {
+                <em class="red">getAnalytics</em> } from
+                <em class="grn"
+                  >'https://www.gstatic.com/firebasejs/9.4.0/firebase-analytics.js'</em
+                >;
+              </p>
+
+              <p><em class="blu">import </em>{</p>
+              <p><em class="red">getAuth</em>,</p>
+              <p><em class="red">createUserWithEmailAndPassword</em>,</p>
+              <p><em class="red">sendEmailVerification</em>,</p>
+              <p>
+                from
+                <em class="grn"
+                  >'https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js'</em
+                >;
+              </p>
+            </div>
+            <p><b>If you understand this you can procede.</b></p>
+          </div>
+          <br />
+          <p><b>So, back to our dedicated module.</b></p>
+          <div class="code code--js">
+            <p>
+              <em class="blu">import</em> {<em class="red">initializeApp</em> }
+              from <em class="grn">'firebase/app'</em>;
+            </p>
+            <p>
+              <em class="blu">import</em> { <em class="red">getAnalytics</em> }
+              from <em class="grn">'firebase/analytics'</em>;
+            </p>
+            <p><em class="blu">import </em>{</p>
+            <p><em class="red">getAuth</em>,</p>
+            <p><em class="red">createUserWithEmailAndPassword</em>,</p>
+            <p><em class="red">sendEmailVerification</em>,</p>
+            <p>} from <em class="grn">'firebase/auth'</em>;</p>
+            <br />
+            <p>
+              <em class="comnt"
+                >// Initialize Firebase with your Firebase configuration</em
+              >
+            </p>
+            <p><em class="blu">const</em> firebaseConfig = {</p>
+            <p>apiKey: <em class="grn">'your-api-key'</em>,</p>
+            <p>authDomain: <em class="grn">'your-auth-domain'</em>,</p>
+            <p>projectId: <em class="grn">'your-project-id'</em>,</p>
+            <p>
+              <em class="comnt">// ... other Firebase configuration options</em>
+            </p>
+            <p>};</p>
+            <br />
+            <p>
+              <em class="blu">const</em> app =
+              <em class="red">initializeApp</em>(firebaseConfig);
+            </p>
+            <p>
+              <em class="blu">const</em> auth =
+              <em class="red"><em class="red">getAuth</em></em
+              >(app);
+            </p>
+
+            <br />
+            <p>
+              <em class="blu">export</em> { app, auth,
+              <em class="red">createUserWithEmailAndPassword</em>,
+              <em class="red">sendEmailVerification</em> };
+            </p>
+          </div>
+
+          <p>
+            In your HTML file, include this script just before the closing body
+            tag.
+            <br />
+            <b
+              >⚠️Your script element must be of type "module" for the imports to
+              work⚠️</b
+            >
+          </p>
+          <p>
+            <b>Using Firebase Services in Other Files:</b> In your other
+            JavaScript files, you can import the Firebase services you need by
+            simply importing them from the <b>firebase.js</b> module we just
+            created.
+          </p>
+          <div class="code code--js">
+            <p><em class="comnt">// anotherFile.js</em></p>
+            <p>
+              <em class="blu">import</em> { auth,
+              <em class="red">createUserWithEmailAndPassword</em>,
+              <em class="red">sendEmailVerification</em> } from
+              <em class="grn">'./firebase'</em>;
+            </p>
+            <p>
+              <em class="comnt">
+                // Now you can use the imported objects throughout this file.
+              </em>
+            </p>
+          </div>
+
+          <button class="btn moreInfoBtn">More Detailed Initialization</button>
+          <div class="hidden btn--more-info-box">
+            <h1>⚙️ Initializing Firebase in Your Project 🛠️</h1>
+
+            <p>
+              In this step, you will include the necessary Firebase scripts in
+              your dedicated module file and initialize Firebase with the
+              configuration data.
+            </p>
+
+            <h3>Part 1: Include Firebase Scripts 📜</h3>
+
+            <p>
+              1. Go to the Firebase Console
+              (https://console.firebase.google.com/).
+            </p>
+            <p>2. Create a new project or select an existing one.</p>
+            <p>
+              3. Click on the gear icon ⚙️ next to "Project Overview" in the
+              left sidebar, and click 'Project Settings'.
+            </p>
+            <p>
+              4. Under the "General" tab, scroll down to the "Your apps"
+              section. Here you'll find the SDK setup and configuration
+              information.
+            </p>
+
+            <h3>
+              🟢📦If you are using a bundler you can use the relative paths like
+              we discussed earier.
+            </h3>
+            <h3>
+              🔴🌐However, if you are not using a bundler and you need to use
+              CDN be aware of the following:
+            </h3>
+            <h3>Firebase Hosting:</h3>
+            <p>
+              If you are using Firebase to host your web app, you have the
+              option of using this:
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="blu">import</em> {<em class="red">initializeApp</em>
+                } from
+                <em class="grn">'/__/firebasejs/9.4.0/firebase-app.js'</em>;
+              </p>
+              <p>
+                <em class="blu">import</em> {
+                <em class="red">getAnalytics</em> } from
+                <em class="grn">'/__/firebasejs/9.4.0/firebase-analytics.js'</em
+                >;
+              </p>
+
+              <p><em class="blu">import </em>{</p>
+              <p><em class="red">getAuth</em>,</p>
+              <p><em class="red">createUserWithEmailAndPassword</em>,</p>
+              <p><em class="red">sendEmailVerification</em>,</p>
+              <p>
+                } from
+                <em class="grn">'/__/firebasejs/9.4.0/firebase-auth.js'</em>;
+              </p>
+            </div>
+
+            <h3>Non-Firebase Hosting:</h3>
+            <p>
+              If you're hosting your web app elsewhere, you MUST use the hosted
+              versions of Firebase scripts unless you have used a bundler:
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="blu">import</em> {<em class="red">initializeApp</em>
+                } from
+                <em class="grn"
+                  >'https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js'</em
+                >;
+              </p>
+              <p>
+                <em class="blu">import</em> {
+                <em class="red">getAnalytics</em> } from
+                <em class="grn"
+                  >'https://www.gstatic.com/firebasejs/9.4.0/firebase-analytics.js'</em
+                >;
+              </p>
+              <p><em class="blu">import </em>{</p>
+              <p><em class="red">getAuth</em>,</p>
+              <p><em class="red">createUserWithEmailAndPassword</em>,</p>
+              <p><em class="red">sendEmailVerification</em>,</p>
+              <p>
+                } from
+                <em class="grn"
+                  >'https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js'</em
+                >;
+              </p>
+            </div>
+
+            <h3>Part 2: Get Your Configuration Object 📋</h3>
+
+            <p>
+              You also need to include a configuration object in your HTML. This
+              object contains crucial information to connect your app to
+              Firebase services. Here's how to obtain it:
+            </p>
+
+            <p>Follow the 4 steps to navigate to Firebase settings.</p>
+
+            <p>
+              Firebase will generate the configuration object for your app. It
+              looks like this:
+            </p>
+
+            <div class="code code--js">
+              <p><em class="blu">const</em> firebaseConfig = {</p>
+              <p>apiKey: <em class="grn">"YOUR_API_KEY"</em>,</p>
+              <p>authDomain: <em class="grn">"YOUR_AUTH_DOMAIN"</em>,</p>
+              <p>projectId: <em class="grn">"YOUR_PROJECT_ID"</em>,</p>
+              <p>storageBucket: <em class="grn">"YOUR_STORAGE_BUCKET"</em>,</p>
+              <p>
+                messagingSenderId:
+                <em class="grn">"YOUR_MESSAGING_SENDER_ID"</em>,
+              </p>
+              <p>appId: <em class="grn">"YOUR_APP_ID"</em>,</p>
+              <p>measurementId: <em class="grn">"YOUR_MEASUREMENT_ID"</em></p>
+              <p>};</p>
+            </div>
+
+            <p>
+              Copy your configuration object and paste it after the imports in
+              your firebase.js.
+            </p>
+
+            <h3>Part 3: Initialize Firebase 🚀</h3>
+
+            <p>
+              Create const vars to initialize Firebase, and hold the funtions we
+              want:
+            </p>
+
+            <div class="code code--js">
+              <p class="comnt">// Initialize Firebase</p>
+              <p>
+                <em class="blu">const</em> app =
+                <em class="red">initializeApp</em>(firebaseConfig);
+              </p>
+              <p>
+                <em class="blu">const</em> analytics =
+                <em class="red"><em class="red">getAnalytics</em></em
+                >(app);
+              </p>
+              <p>
+                <em class="blu">const</em> auth =
+                <em class="red"><em class="red">getAuth</em></em
+                >(app);
+              </p>
+              <br />
+            </div>
+            <p>Finally create an export for the funtions.</p>
+            <div class="code code--js">
+              <p>
+                <em class="blu">export</em> { app, analytics, auth,
+                <em class="red">createUserWithEmailAndPassword</em>,
+                <em class="red">sendEmailVerification</em> };
+              </p>
+            </div>
+            <p>
+              Now, your web app is connected to Firebase, and you can start
+              using Firebase services, including user authentication.
+            </p>
+            <h3>Part 4: Using Firebase Services in Other Files💬</h3>
+            <p>
+              In your other JavaScript files, you can import the Firebase
+              services you need by simply importing them from the
+              <b>firebase.js</b> module we just created.
+            </p>
+            <div class="code code--js">
+              <p><em class="comnt">// anotherFile.js</em></p>
+              <p>
+                <em class="blu">import</em> { auth,
+                <em class="red">createUserWithEmailAndPassword</em>,
+                <em class="red">sendEmailVerification</em> } from
+                <em class="grn">'./firebase'</em>;
+              </p>
+              <p>
+                <em class="comnt">
+                  // Now you can use the imported objects, or functions
+                  throughout this file.
+                </em>
+              </p>
+            </div>
+          </div>
+          <button class="btn moreInfoBtn">
+            Why are we assigning the funtions to const vars?
+          </button>
+          <div class="hidden btn--more-info-box">
+            <p><b>Creating Constants for app and auth:</b></p>
+            <p>
+              <b>'app'</b> is created to initialize the Firebase app using your
+              configuration (firebaseConfig). auth is created by calling
+              <b>getAuth(app)</b> to get an instance of Firebase Authentication
+              associated with the initialized app. This is a common pattern when
+              working with Firebase Modular SDK.
+            </p>
+            <p>
+              By storing auth as a constant, you can reuse it throughout your
+              code without needing to repeatedly call
+              <b>getAuth(app)</b>.
+            </p>
+            <br />
+            <p>
+              <b>Exporting createUserWithEmailAndPassword:</b>
+              createUserWithEmailAndPassword is a function from Firebase Auth
+              module, and it is directly exported from the module to make it
+              available for import. There's no need to assign it to a constant
+              because it's not used repeatedly within firebase.js.
+            </p>
+            <p>
+              <b>Passing Parameters to Functions:</b> In the case of
+              getAuth(app), app is passed as a parameter because it associates
+              the Firebase Authentication instance (auth) with the initialized
+              Firebase app (app). It establishes a connection between the
+              Authentication service and the Firebase app. This pattern is
+              specific to Firebase's modular architecture, where services are
+              tied to specific Firebase app instances.
+            </p>
+            <p>
+              <b>When to Create Constants:</b> Constants (app and auth in this
+              case) are typically created for objects that are used extensively
+              throughout your application to avoid repetitive initialization and
+              function calls. You can choose to create constants for services
+              that are frequently used.
+            </p>
+            <p>
+              <b>In summary,</b> the decision to create constants or not and
+              when to pass parameters depends on the specific needs of your
+              application. The Firebase modular approach allows for flexibility
+              in how you structure your code, but it's generally a good practice
+              to create constants for frequently used objects and parameters
+              when needed to configure or associate services.
+            </p>
+          </div>
+          <button class="btn moreInfoBtn">
+            Is there a way to say "export{everything}"?
+          </button>
+          <div class="hidden btn--more-info-box">
+            <h1>📦 JavaScript Module Exports: Importing "Everything"</h1>
+            <h3>
+              ⚠️<b>This is not recommended for larger-scale projects.</b>⚠️
+            </h3>
+            <p>
+              In JavaScript, there isn't a direct way to export everything from
+              a module using a single statement like
+              <code>export { everything }</code>. Instead, you typically need to
+              explicitly specify what you want to export from the module.
+            </p>
+
+            <p>
+              However, you can achieve a similar result by using the
+              <code>*</code> as syntax to create a namespace import that allows
+              you to access all exports from a module via a single object.
+              Here's how you can do it:
+            </p>
+
+            <p>
+              Suppose you have a module called <code>myModule</code> with
+              multiple exports:
+            </p>
+
+            <div class="code code--js">
+              <p><em class="comnt">/* myModule.js */</em></p>
+              <p>export const func1 = () => {</p>
+              <p><em class="comnt">// Function 1 implementation</em></p>
+              <p>};</p>
+              <p></p>
+              <p>export const func2 = () => {</p>
+              <p><em class="comnt">// Function 2 implementation</em></p>
+              <p>};</p>
+              <p></p>
+              <p>export const variable1 = 'Hello, World!';</p>
+            </div>
+
+            <p>
+              You can import everything from <code>myModule</code> into a single
+              object like this:
+            </p>
+
+            <div class="code code--js">
+              <p><em class="comnt">/* Your main JavaScript file */</em></p>
+              <p></p>
+              <p>import * as bigDaddy from './myModule.js';</p>
+              <p></p>
+              <p>
+                console.log(bigDaddy.func1());
+                <em class="comnt">// Call func1 from myModule</em>
+              </p>
+              <p>
+                console.log(bigDaddy.func2());
+                <em class="comnt">// Call func2 from myModule</em>
+              </p>
+              <p>
+                console.log(myModule.variable1);
+                <em class="comnt"> // Access variable1 from myModule </em>
+              </p>
+            </div>
+
+            <p>
+              In this example, <code>import * as bigDaddy</code> imports all
+              exports from <code>myModule.js</code> into the
+              <code>bigDaddy</code> object, allowing you to access them as
+              properties of that object. This approach gives you a way to
+              effectively import "everything" from a module in a single
+              statement, but there isn't a direct way to export everything from
+              a module.
+            </p>
+          </div>
+
+          <h2>Step 4: Create a Sign-Up Page 📝</h2>
+
+          <p>Design a beautiful sign-up form using HTML and CSS.</p>
+          <p>Add form fields for email and password.</p>
+          <p>Create the buttons.</p>
+
+          <div class="code code--html">
+            <p>
+              &lt;<em class="blu">form</em> id=<em class="grn"
+                >"registration-form"</em
+              >
+              style=<em class="grn">"text-align: center"</em>&gt;
+            </p>
+            <p>
+              &nbsp;&nbsp;&lt;<em class="blu">input</em> type=<em class="grn"
+                >"email"</em
+              >
+              id=<em class="grn">"email" </em>placeholder=<em class="grn"
+                >"Email"</em
+              >
+              /&gt;
+            </p>
+            <p>
+              &nbsp;&nbsp;&lt;<em class="blu">input</em> type=<em class="grn"
+                >"password"</em
+              >
+              id=<em class="grn">"password"</em> placeholder=<em class="grn"
+                >"Password"</em
+              >
+              /&gt;
+            </p>
+            <p>
+              &nbsp;&nbsp;&lt;<em class="blu">button</em> type=<em class="grn"
+                >"submit"</em
+              >
+              id=<em class="grn">"createUserBtn"</em> &gt;Create Account&lt;<em
+                class="blu"
+                >/button</em
+              >&gt;
+            </p>
+            <p>&lt;<em class="blu">br</em> /&gt;</p>
+            <p>
+              &nbsp;&nbsp;&lt;<em class="blu">button</em> type=<em class="grn"
+                >"submit"</em
+              >
+              id=<em class="grn">"signInBtn."</em> &gt;Log In&lt;<em class="blu"
+                >/button</em
+              >&gt;
+            </p>
+            <p>
+              &nbsp;&nbsp;&lt;<em class="blu">button</em> type=<em class="grn"
+                >"button"</em
+              >
+              id=<em class="grn">"signOutBtn"</em> &gt;Log Off&lt;<em
+                class="blu"
+                >/button</em
+              >&gt;
+            </p>
+            <p>&lt;/<em class="blu">form</em>&gt;</p>
+          </div>
+
+          <h2>Step 5: Implement User Registration 📧</h2>
+          <p>
+            In this guide we are going to create a 'firebase-auth.js' to handle
+            all the authorization code in one script.
+            <br />
+            <br />
+            For a large-scale projects you may want to create individual modules
+            for each action(e.g. 'firebase-auth-sign-up.js',
+            'firebase-auth-sign-in.js', 'firebase-auth-sign-out.js').
+          </p>
+
+          <h3>
+            In your JavaScript, add an event listener to the submit button.
+          </h3>
+          <p>(don't forget your imports)</p>
+          <p>
+            When the user submits the form, use Firebase Auth to create a new
+            user account:
+          </p>
+
+          <div class="code code--js">
+            <p><em class="comnt">// Import the functions you need</em></p>
+            <p>
+              <em class="blu">import</em> { auth,
+              <em class="red">createUserWithEmailAndPassword</em>,
+              <em class="red">sendEmailVerification</em> } from
+              <em class="grn">'./firebase.js'</em>;
+            </p>
+            <br />
+            <p>
+              <em class="blu">const</em> createUserBtn =
+              document.getElementById(<em class="grn">'createUserBtn'</em>);
+            </p>
+            <p>
+              createUserBtn.addEventListener(<em class="grn">'click'</em>, async
+              (e) => {
+            </p>
+            <p>
+              <em class="comnt"
+                >// Prevent the default form submission behavior</em
+              >
+            </p>
+            <p>&nbsp;&nbsp;e.preventDefault();</p>
+            <br />
+            <p>
+              <em class="comnt">// Your registration logic goes here</em>
+            </p>
+            <p>
+              <em class="blu">const </em>email = document.getElementById(<em
+                class="grn"
+                >'email-input'</em
+              >).value;
+            </p>
+            <p>
+              <em class="blu">const</em> password = document.getElementById(<em
+                class="grn"
+                >'password-input'</em
+              >).value;
+            </p>
+            <br />
+            <p><em class="blu">try</em> {</p>
+            <p><em class="comnt">// Create user</em></p>
+            <p>
+              &nbsp;&nbsp; <em class="blu">const</em> userCredential =
+              <em class="blu">await</em>
+              <em class="red">createUserWithEmailAndPassword</em>(auth, email,
+              password);
+            </p>
+            <p>
+              &nbsp;&nbsp; console.log(<em class="grn">'User Created!'</em>)
+            </p>
+            <br />
+            <p><em class="comnt">// Send verification email</em></p>
+            <p>
+              &nbsp;&nbsp; <em class="blu">await</em>
+              <em class="red">sendEmailVerification</em>(userCredential.user);
+            </p>
+            <p>
+              &nbsp;&nbsp; alert(<em class="grn"
+                >"Check email for verification"</em
+              >);
+            </p>
+            <p>
+              <em class="comnt">// User registration successful</em>
+            </p>
+            <p>}</p>
+            <p><em class="blu">catch</em> (error) {</p>
+            <p>
+              <em class="comnt">// Handle registration errors</em>
+            </p>
+            <p>&nbsp;&nbsp;console.error('Registration error:', error);</p>
+            <p>
+              <em class="comnt">// You can add error handling here</em>
+            </p>
+            <p>}</p>
+            <p>});</p>
+          </div>
+          <button class="btn moreInfoBtn">Code Breakdown</button>
+          <div class="hidden btn--more-info-box">
+            <!-- 📧 Implementing User Registration with Firebase 🔑 -->
+
+            <h1>Step 5: Implement User Registration 📧</h1>
+
+            <h2>
+              Part 1: Import Firebase Functions from Your Dedicated Module 📦
+            </h2>
+
+            <p>
+              To follow the async modular SDK approach, you should start by
+              importing Firebase functions from your centralized import module.
+              This ensures that you have access to Firebase services for user
+              registration.
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="blu">import</em> { auth,
+                <em class="red">createUserWithEmailAndPassword</em>,
+                <em class="red">sendEmailVerification</em> } from
+                <em class="grn">'./firebase.js'</em>;
+              </p>
+            </div>
+
+            <h2>Part 2: Event Listener Setup 🎧</h2>
+
+            <p>
+              Now, let's set up an event listener for the submit button in your
+              HTML form. This listener will trigger the user registration
+              process when the form is submitted. Here's how to do it:
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="blu">const</em> submitButton =
+                document.getElementById(<em class="grn">'submit-button'</em>);
+              </p>
+              <p>
+                submitButton.addEventListener(<em class="grn">'click'</em>,
+                async (e) => {
+              </p>
+              <p>
+                &nbsp;&nbsp;<em class="comnt"
+                  >// Prevent the default form submission behavior</em
+                >
+              </p>
+              <p>&nbsp;&nbsp;event.preventDefault();</p>
+              <p>
+                &nbsp;&nbsp;<em class="comnt"
+                  >// Your registration logic goes here</em
+                >
+              </p>
+              <p>});</p>
+            </div>
+            <button class="btn moreInfoBtn">
+              The structure of an event listener
+            </button>
+            <div class="hidden btn--more-info-box">
+              <!-- 🎉 The Structure of an Event Listener in JavaScript 🎉 -->
+
+              <h1>Understanding Event Listeners in JavaScript 🚀</h1>
+
+              <p>
+                Event listeners are a fundamental part of web development,
+                enabling you to create interactive and responsive web
+                applications. They allow you to detect and respond to various
+                events, such as clicks, keypresses, form submissions, and more.
+                In JavaScript, event listeners follow a structured pattern.
+              </p>
+
+              <h2>1. Target Element Selection 🎯</h2>
+
+              <p>
+                First, you need to select the HTML element to which you want to
+                attach the event listener. You can do this using methods like
+                <code>getElementById</code>, <code>querySelector</code>, or by
+                referencing an existing DOM element.
+              </p>
+
+              <h3>Example:</h3>
+              <div class="code code--js">
+                <p><em class="comnt">// Select a button element</em></p>
+                <p>
+                  <em class="blu">const</em> buttonElement =
+                  document.getElementById(<em class="grn">'myButton'</em>);
+                </p>
+              </div>
+
+              <h2>2. Event Type Specification 📅</h2>
+
+              <p>
+                Next, you specify the type of event you want to listen for. This
+                can be events like <code>'click'</code>, <code>'submit'</code>,
+                <code>'keyup'</code>, and many others. The event type indicates
+                what action should trigger the event listener.
+              </p>
+
+              <h3>Example:</h3>
+              <div class="code code--js">
+                <p><em class="comnt">// Attach a 'click' event listener</em></p>
+                <p>buttonElement.addEventListener('click', (event) => {</p>
+                <p>
+                  &nbsp;&nbsp;<em class="comnt">// Event handling function</em>
+                </p>
+                <p>
+                  &nbsp;&nbsp;<em class="comnt"
+                    >// This code runs when the button is clicked</em
+                  >
+                </p>
+                <p>});</p>
+              </div>
+              <button class="btn moreInfoBtn">More JS events</button>
+              <div class="hidden btn--more-info-box">
+                <!-- 🎉 Types of JavaScript Events and Their Descriptions 🎉 -->
+
+                <h1>Types of JavaScript Events and Their Descriptions 🚀</h1>
+
+                <h2>1. Mouse Events 🐭</h2>
+                <p>
+                  - <strong>click</strong>: Occurs when an element is clicked.
+                </p>
+                <p>
+                  - <strong>dblclick</strong>: Occurs when an element is
+                  double-clicked.
+                </p>
+                <p>
+                  - <strong>mousedown</strong>: Occurs when a mouse button is
+                  pressed over an element.
+                </p>
+                <p>
+                  - <strong>mouseup</strong>: Occurs when a mouse button is
+                  released over an element.
+                </p>
+                <p>
+                  - <strong>mousemove</strong>: Occurs when the mouse pointer
+                  moves over an element.
+                </p>
+                <p>
+                  - <strong>mouseover</strong>: Occurs when the mouse pointer
+                  enters an element.
+                </p>
+                <p>
+                  - <strong>mouseout</strong>: Occurs when the mouse pointer
+                  leaves an element.
+                </p>
+
+                <h2>2. Keyboard Events ⌨️</h2>
+                <p>
+                  - <strong>keydown</strong>: Occurs when a key is pressed down.
+                </p>
+                <p>- <strong>keyup</strong>: Occurs when a key is released.</p>
+                <p>
+                  - <strong>keypress</strong>: Occurs when a key is pressed and
+                  released.
+                </p>
+
+                <h2>3. Form Events 📝</h2>
+                <p>
+                  - <strong>submit</strong>: Occurs when a form is submitted.
+                </p>
+                <p>- <strong>reset</strong>: Occurs when a form is reset.</p>
+                <p>
+                  - <strong>focus</strong>: Occurs when an element receives
+                  focus.
+                </p>
+                <p>
+                  - <strong>blur</strong>: Occurs when an element loses focus.
+                </p>
+                <p>
+                  - <strong>change</strong>: Occurs when the value of a form
+                  element changes.
+                </p>
+                <p>
+                  - <strong>input</strong>: Occurs when an input field's value
+                  changes.
+                </p>
+
+                <h2>4. Window Events 🖼️</h2>
+                <p>
+                  - <strong>load</strong>: Occurs when a web page or an image
+                  has finished loading.
+                </p>
+                <p>
+                  - <strong>unload</strong>: Occurs when a web page is unloaded
+                  (rarely used).
+                </p>
+                <p>
+                  - <strong>resize</strong>: Occurs when the browser window is
+                  resized.
+                </p>
+                <p>
+                  - <strong>scroll</strong>: Occurs when the user scrolls within
+                  an element.
+                </p>
+
+                <h2>5. Document Events 📄</h2>
+                <p>
+                  - <strong>DOMContentLoaded</strong>: Occurs when the HTML
+                  document has been completely loaded and parsed.
+                </p>
+                <p>
+                  - <strong>readystatechange</strong>: Occurs when the ready
+                  state of the document changes.
+                </p>
+                <p>
+                  - <strong>beforeunload</strong>: Occurs before the user
+                  navigates away from the page (often used for confirmation).
+                </p>
+
+                <h2>6. Drag and Drop Events 📦</h2>
+                <p>
+                  - <strong>dragstart</strong>: Occurs when an element is
+                  dragged.
+                </p>
+                <p>
+                  - <strong>dragend</strong>: Occurs when the dragging operation
+                  is finished.
+                </p>
+                <p>
+                  - <strong>dragenter</strong>: Occurs when a dragged element
+                  enters a drop target.
+                </p>
+                <p>
+                  - <strong>dragleave</strong>: Occurs when a dragged element
+                  leaves a drop target.
+                </p>
+                <p>
+                  - <strong>dragover</strong>: Occurs when a dragged element is
+                  over a drop target.
+                </p>
+                <p>
+                  - <strong>drop</strong>: Occurs when a dragged element is
+                  dropped on a drop target.
+                </p>
+
+                <h2>7. Media Events 🎥</h2>
+                <p>
+                  - <strong>play</strong>: Occurs when media playback begins.
+                </p>
+                <p>
+                  - <strong>pause</strong>: Occurs when media playback is
+                  paused.
+                </p>
+                <p>
+                  - <strong>ended</strong>: Occurs when media playback ends.
+                </p>
+
+                <h2>8. Animation and Transition Events 🎬</h2>
+                <p>
+                  - <strong>animationstart</strong>: Occurs when a CSS animation
+                  starts.
+                </p>
+                <p>
+                  - <strong>animationend</strong>: Occurs when a CSS animation
+                  ends.
+                </p>
+                <p>
+                  - <strong>animationiteration</strong>: Occurs when a CSS
+                  animation completes one iteration.
+                </p>
+                <p>
+                  - <strong>transitionend</strong>: Occurs when a CSS transition
+                  ends.
+                </p>
+
+                <h2>9. WebSocket Events 🌐</h2>
+                <p>
+                  - <strong>open</strong>: Occurs when a WebSocket connection is
+                  opened.
+                </p>
+                <p>
+                  - <strong>message</strong>: Occurs when a message is received
+                  over a WebSocket connection.
+                </p>
+                <p>
+                  - <strong>error</strong>: Occurs when there is an error with a
+                  WebSocket connection.
+                </p>
+                <p>
+                  - <strong>close</strong>: Occurs when a WebSocket connection
+                  is closed.
+                </p>
+                <button class="btn moreInfoBtn">Even more events</button>
+                <div class="hidden btn--more-info-box">
+                  <!-- 🎉 More JavaScript Events and Their Descriptions 🎉 -->
+
+                  <h2>10. Mouse Wheel Events 🐭</h2>
+                  <p>
+                    - <strong>wheel</strong>: Occurs when the mouse wheel is
+                    rolled up or down.
+                  </p>
+
+                  <h2>11. Clipboard Events 📋</h2>
+                  <p>
+                    - <strong>copy</strong>: Occurs when the user copies content
+                    to the clipboard.
+                  </p>
+                  <p>
+                    - <strong>cut</strong>: Occurs when the user cuts content to
+                    the clipboard.
+                  </p>
+                  <p>
+                    - <strong>paste</strong>: Occurs when the user pastes
+                    content from the clipboard.
+                  </p>
+
+                  <h2>12. Touch Events 👆📱</h2>
+                  <p>
+                    - <strong>touchstart</strong>: Occurs when a touch point is
+                    placed on the touch surface.
+                  </p>
+                  <p>
+                    - <strong>touchend</strong>: Occurs when a touch point is
+                    removed from the touch surface.
+                  </p>
+                  <p>
+                    - <strong>touchmove</strong>: Occurs when a touch point is
+                    moved along the touch surface.
+                  </p>
+                  <p>
+                    - <strong>touchcancel</strong>: Occurs when a touch event is
+                    canceled.
+                  </p>
+
+                  <h2>13. Focus Management Events 🔍</h2>
+                  <p>
+                    - <strong>focusin</strong>: Occurs when an element or its
+                    descendants receive focus.
+                  </p>
+                  <p>
+                    - <strong>focusout</strong>: Occurs when an element or its
+                    descendants lose focus.
+                  </p>
+
+                  <h2>14. Drag and Drop Events (Additional) 📦</h2>
+                  <p>
+                    - <strong>drag</strong>: Occurs when an element is being
+                    dragged.
+                  </p>
+                  <p>
+                    - <strong>dragenter</strong>: Occurs when a dragged element
+                    enters a drop target.
+                  </p>
+                  <p>
+                    - <strong>dragleave</strong>: Occurs when a dragged element
+                    leaves a drop target.
+                  </p>
+                  <p>
+                    - <strong>dragover</strong>: Occurs when a dragged element
+                    is over a drop target.
+                  </p>
+                  <p>
+                    - <strong>dragexit</strong>: Occurs when a drag operation is
+                    canceled.
+                  </p>
+
+                  <h2>15. Touch Gestures 🖐️</h2>
+                  <p>
+                    - <strong>gesturestart</strong>: Occurs when a gesture
+                    (e.g., pinch) is started.
+                  </p>
+                  <p>
+                    - <strong>gesturechange</strong>: Occurs when a gesture
+                    (e.g., pinch) is in progress.
+                  </p>
+                  <p>
+                    - <strong>gestureend</strong>: Occurs when a gesture (e.g.,
+                    pinch) ends.
+                  </p>
+
+                  <h2>16. Gamepad Events 🎮</h2>
+                  <p>
+                    - <strong>gamepadconnected</strong>: Occurs when a gamepad
+                    is connected.
+                  </p>
+                  <p>
+                    - <strong>gamepaddisconnected</strong>: Occurs when a
+                    gamepad is disconnected.
+                  </p>
+                  <p>
+                    - <strong>gamepadbuttondown</strong>: Occurs when a button
+                    on a gamepad is pressed.
+                  </p>
+                  <p>
+                    - <strong>gamepadbuttonup</strong>: Occurs when a button on
+                    a gamepad is released.
+                  </p>
+
+                  <h2>17. Orientation Events 📐</h2>
+                  <p>
+                    - <strong>orientationchange</strong>: Occurs when the
+                    orientation of the device changes (e.g., portrait to
+                    landscape).
+                  </p>
+
+                  <h2>18. Battery Status Events 🔋</h2>
+                  <p>
+                    - <strong>batterychange</strong>: Occurs when the battery
+                    status of a device changes.
+                  </p>
+
+                  <h2>19. Network Events 🌐</h2>
+                  <p>
+                    - <strong>online</strong>: Occurs when the device gains
+                    network connectivity.
+                  </p>
+                  <p>
+                    - <strong>offline</strong>: Occurs when the device loses
+                    network connectivity.
+                  </p>
+
+                  <h2>20. Speech Recognition Events 🗣️</h2>
+                  <p>
+                    - <strong>speechstart</strong>: Occurs when speech
+                    recognition begins.
+                  </p>
+                  <p>
+                    - <strong>speechend</strong>: Occurs when speech recognition
+                    ends.
+                  </p>
+                  <p>
+                    - <strong>result</strong>: Occurs when speech recognition
+                    results become available.
+                  </p>
+                  <button class="btn moreInfoBtn">There is so many</button>
+                  <div class="hidden btn--more-info-box">
+                    <!-- 🚀 Extended List of JavaScript Events and Their Descriptions 🚀 -->
+
+                    <h2>21. Selection Events 📄</h2>
+                    <p>
+                      - <strong>selectstart</strong>: Occurs when the user
+                      begins selecting text or elements on a page.
+                    </p>
+                    <p>
+                      - <strong>selectionchange</strong>: Occurs when the
+                      selected text or elements change.
+                    </p>
+
+                    <h2>22. WebVR and WebXR Events 🕶️</h2>
+                    <p>
+                      - <strong>vrdisplayconnect</strong>: Occurs when a virtual
+                      reality (VR) display is connected.
+                    </p>
+                    <p>
+                      - <strong>vrdisplaydisconnect</strong>: Occurs when a VR
+                      display is disconnected.
+                    </p>
+                    <p>
+                      - <strong>vrdisplayactivate</strong>: Occurs when a VR
+                      display is activated.
+                    </p>
+                    <p>
+                      - <strong>vrdisplaydeactivate</strong>: Occurs when a VR
+                      display is deactivated.
+                    </p>
+
+                    <h2>23. Payment Request Events 💳</h2>
+                    <p>
+                      - <strong>paymentrequest</strong>: Occurs when a payment
+                      request is made, allowing for secure online payments.
+                    </p>
+
+                    <h2>24. Idle Detection Events ⌛</h2>
+                    <p>
+                      - <strong>idle</strong>: Occurs when the user's device
+                      goes into an idle state (e.g., no user interaction) or
+                      exits the idle state.
+                    </p>
+
+                    <h2>25. Battery Charging Events 🔌</h2>
+                    <p>
+                      - <strong>chargingchange</strong>: Occurs when the
+                      device's charging status changes.
+                    </p>
+                    <p>
+                      - <strong>chargingtimechange</strong>: Occurs when the
+                      time to full charge changes.
+                    </p>
+
+                    <h2>26. Pointer Events 🖋️</h2>
+                    <p>
+                      - <strong>pointerdown</strong>: Occurs when a pointer
+                      device (e.g., stylus) is pressed.
+                    </p>
+                    <p>
+                      - <strong>pointerup</strong>: Occurs when a pointer device
+                      is released.
+                    </p>
+                    <p>
+                      - <strong>pointermove</strong>: Occurs when a pointer
+                      device moves.
+                    </p>
+                    <p>
+                      - <strong>pointerenter</strong>: Occurs when a pointer
+                      enters the boundaries of an element.
+                    </p>
+                    <p>
+                      - <strong>pointerleave</strong>: Occurs when a pointer
+                      leaves the boundaries of an element.
+                    </p>
+
+                    <h2>27. Animation Playback Control 🎞️</h2>
+                    <p>
+                      - <strong>animationiteration</strong>: Occurs when a CSS
+                      animation completes one iteration.
+                    </p>
+                    <p>
+                      - <strong>animationcancel</strong>: Occurs when a CSS
+                      animation is canceled.
+                    </p>
+
+                    <h2>28. Canvas Events 🎨</h2>
+                    <p>
+                      - <strong>canvasresize</strong>: A custom event often used
+                      when the size of a <code>&lt;canvas&gt;</code> element
+                      changes.
+                    </p>
+
+                    <h2>29. Device Motion and Orientation 📱🔄</h2>
+                    <p>
+                      - <strong>devicemotion</strong>: Occurs when the device's
+                      motion changes (e.g., shaking).
+                    </p>
+                    <p>
+                      - <strong>deviceorientation</strong>: Occurs when the
+                      device's orientation changes (e.g., tilting).
+                    </p>
+
+                    <h2>30. Document Focus Events 📄🔍</h2>
+                    <p>
+                      - <strong>fullscreenchange</strong>: Occurs when an
+                      element enters or exits fullscreen mode.
+                    </p>
+                    <p>
+                      - <strong>fullscreenerror</strong>: Occurs when an element
+                      cannot be placed in fullscreen mode.
+                    </p>
+
+                    <h2>31. History Navigation Events 🕰️</h2>
+                    <p>
+                      - <strong>popstate</strong>: Occurs when the user
+                      navigates through the session history (e.g., back or
+                      forward buttons).
+                    </p>
+                    <h2>32. Network Information Events 🌐</h2>
+                    <p>
+                      - <strong>networkchange</strong>: Occurs when the network
+                      connection status or type changes (e.g., from online to
+                      offline).
+                    </p>
+
+                    <h2>33. Proximity Events 📏</h2>
+                    <p>
+                      - <strong>userproximity</strong>: Occurs when a device
+                      sensor detects whether an object is in close proximity to
+                      the screen.
+                    </p>
+
+                    <h2>34. Broadcast Channel Events 📡</h2>
+                    <p>
+                      - Events related to the Broadcast Channel API, which
+                      allows communication between different browsing contexts
+                      (e.g., tabs or iframes).
+                    </p>
+
+                    <h2>35. VR Controller Events 🎮</h2>
+                    <p>
+                      - Events related to virtual reality (VR) controller
+                      interaction, including button presses and controller
+                      movement.
+                    </p>
+
+                    <h2>36. Resize Observer Events 📐</h2>
+                    <p>
+                      - <strong>resize</strong>: Occurs when an observed
+                      element's size changes, typically used for responsive
+                      design.
+                    </p>
+
+                    <h2>37. Background Sync Events 🔄</h2>
+                    <p>
+                      - Events related to background sync, which allows web
+                      applications to sync data in the background even when the
+                      app is not open.
+                    </p>
+
+                    <h2>39. Accessibility Events ♿</h2>
+                    <p>
+                      - Events related to accessibility features, including
+                      screen reader interactions and focus changes.
+                    </p>
+
+                    <!-- The extended events continue below... -->
+                  </div>
+                </div>
+              </div>
+
+              <h2>3. Event Handling Function 🧩</h2>
+
+              <p>
+                Finally, you define a JavaScript function that will be executed
+                when the specified event occurs. This function is often referred
+                to as the event handler or callback function. It contains the
+                code that responds to the event and interacts with the DOM or
+                performs other actions.
+              </p>
+
+              <h3>Example:</h3>
+              <div class="code code--js">
+                <p>
+                  <em class="comnt"
+                    >// Event handling function for
+                    <em class="grn">'click'</em> event</em
+                  >
+                </p>
+                <p>
+                  buttonElement.addEventListener(<em class="grn">'click'</em>,
+                  (event) => {
+                </p>
+                <p>
+                  &nbsp;&nbsp;<em class="comnt"
+                    >// This code runs when the button is clicked</em
+                  >
+                </p>
+                <p>
+                  &nbsp;&nbsp;console.log(<em class="grn">'Button clicked!'</em
+                  >);
+                </p>
+                <p>});</p>
+              </div>
+
+              <p>
+                This structured approach allows you to create custom behavior
+                for your web application in response to user interactions and
+                events, making your web app more interactive and user-friendly.
+                Happy coding! 🚀🌐👩‍💻
+              </p>
+            </div>
+            <button class="btn moreInfoBtn">event.preventDefault(); ??</button>
+            <div class="hidden btn--more-info-box">
+              <!-- Preventing Default Behavior in Web Forms 🚫 -->
+
+              <h1>Preventing Default Behavior in Web Forms 🚫</h1>
+
+              <p>
+                In a typical web form scenario, you would use
+                <code>event.preventDefault()</code> within a
+                <code>submit</code> event listener to prevent the default
+                behavior of the form, which is to perform a full page reload
+                when the form is submitted. However, whether or not you need to
+                use <code>event.preventDefault()</code> depends on your specific
+                use case.
+              </p>
+
+              <h2>How it Works:</h2>
+
+              <p>
+                <strong>Default Behavior:</strong> When a form is submitted
+                without <code>event.preventDefault()</code>, the browser
+                typically sends a request to the server, causing a page reload
+                or navigation to a new page. This behavior is the default action
+                of a form submission.
+              </p>
+
+              <p>
+                <strong>Preventing Default Behavior:</strong> By calling
+                <code>event.preventDefault()</code> within the
+                <code>submit</code> event listener, you can prevent the default
+                form submission behavior. This is useful when you want to handle
+                form submission using JavaScript, without a full page reload.
+              </p>
+            </div>
+
+            <h2>Part 3: User Registration 🚀</h2>
+
+            <p>
+              Inside the event listener, you'll use Firebase Authentication to
+              create a new user account. Here's a detailed explanation of each
+              step:
+            </p>
+
+            <p><strong>Retrieve User Input:</strong></p>
+            <p>
+              We retrieve the user's email and password from the input fields in
+              your form.
+            </p>
+            <div class="code code--js">
+              <p>
+                <em class="blu">const </em>email = document.getElementById(<em
+                  class="grn"
+                  >'email-input'</em
+                >).value;
+              </p>
+              <p>
+                <em class="blu">const</em> password =
+                document.getElementById(<em class="grn">'password-input'</em
+                >).value;
+              </p>
+            </div>
+
+            <p><strong>User Registration with Firebase:</strong></p>
+            <p>
+              Now, use the Firebase Authentication functions from the imported
+              module to register the user. Here's a simplified example:
+            </p>
+            ]
+            <div class="code code--js">
+              <p><em class="blu">try</em> {</p>
+              <p>
+                &nbsp;&nbsp; <em class="blu">const</em> userCredential =
+                <em class="blu">await</em>
+                <em class="red">createUserWithEmailAndPassword</em>(auth, email,
+                password);
+              </p>
+              <p>
+                &nbsp;&nbsp;<em class="comnt"
+                  >// User registration successful</em
+                >
+              </p>
+              <p>
+                &nbsp;&nbsp;console.log(<em class="grn">'User Created!'</em>)
+              </p>
+              <br />
+              <p><em class="comnt">// Send verification email</em></p>
+              <p>
+                &nbsp;&nbsp; <em class="blu">await</em>
+                <em class="red">sendEmailVerification</em>(userCredential.user);
+              </p>
+              <p>
+                &nbsp;&nbsp; alert(<em class="grn"
+                  >"Check email for verification"</em
+                >);
+              </p>
+              <p>
+                <em class="comnt">// User registration successful</em>
+              </p>
+              <p>}</p>
+              <p>catch (error) {</p>
+              <p>
+                &nbsp;&nbsp;<em class="comnt">// Handle registration errors</em>
+              </p>
+              <p>&nbsp;&nbsp;console.error('Registration error:', error);</p>
+              <p>
+                &nbsp;&nbsp;<em class="comnt"
+                  >// You can add error handling here</em
+                >
+              </p>
+              <p>}</p>
+            </div>
+
+            <button class="btn moreInfoBtn">Async Firebase</button>
+            <div class="hidden btn--more-info-box">
+              <!-- Asynchronous Programming in Firebase 🔥-->
+
+              <h1>Asynchronous Programming in Firebase 🔥</h1>
+
+              <p>
+                Firebase is indeed designed around asynchronous communication
+                because it often involves network requests and interactions with
+                remote servers. When you work with Firebase, you'll frequently
+                encounter asynchronous operations, such as signing in a user,
+                retrieving data from a database, or uploading files to Firebase
+                Storage. These operations take time to complete and, therefore,
+                use asynchronous patterns.
+              </p>
+
+              <h2>Key Points to Keep in Mind:</h2>
+
+              <ol>
+                <li>
+                  <strong>Asynchronous Operations:</strong> Most Firebase
+                  functions return Promises, which allow you to work with them
+                  asynchronously using <code>.then</code> and
+                  <code>.catch</code> or <code>async/await</code>. This is
+                  important because it ensures that your application remains
+                  responsive while Firebase operations are being performed.
+                </li>
+
+                <li>
+                  <strong>Handling Promises:</strong> When working with
+                  Firebase, it's essential to understand how to handle Promises
+                  effectively. This includes using <code>.then</code> and
+                  <code>.catch</code> to manage success and error cases.
+                </li>
+
+                <li>
+                  <strong>Avoiding Blocking:</strong> Asynchronous code helps
+                  prevent your application from blocking (freezing) while
+                  waiting for Firebase operations to complete. It ensures a
+                  smoother user experience.
+                </li>
+
+                <li>
+                  <strong>Sequential Flow:</strong> Using
+                  <code>async/await</code> can make your Firebase-related code
+                  look more sequential and easier to follow, especially when you
+                  have multiple Firebase operations to perform in a specific
+                  order.
+                </li>
+
+                <li>
+                  <strong>Error Handling:</strong> Pay attention to error
+                  handling. Firebase operations may encounter errors due to
+                  network issues, authentication problems, or other factors.
+                  Proper error handling is crucial to provide a robust user
+                  experience.
+                </li>
+              </ol>
+
+              <p>
+                In summary, when working with Firebase, embracing asynchronous
+                code patterns is essential. Firebase is designed this way to
+                ensure that your web or mobile application remains responsive
+                and efficient even when dealing with remote server interactions.
+                Whether you choose to use <code>.then</code> and
+                <code>.catch</code> or <code>async/await</code> depends on your
+                coding style and preferences, but both approaches are valid and
+                widely used in Firebase development.
+              </p>
+            </div>
+            <button class="btn moreInfoBtn">async/await vs. .then</button>
+            <div class="hidden btn--more-info-box">
+              <!-- Clarifying the Use of async/await vs. .then and Their Best Practices 🚀-->
+
+              <h1>
+                Clarifying the Use of async/await vs. .then and Their Best
+                Practices 🚀
+              </h1>
+
+              <p>
+                I apologize for any confusion. Let's clarify the use of
+                <code>async/await</code> versus <code>.then</code> and why both
+                can be considered best practices in different contexts.
+              </p>
+
+              <h2>
+                1. Using <code>.then</code> and <code>.catch</code> (Promises):
+              </h2>
+
+              <p>
+                <strong>Context:</strong> When working with asynchronous
+                operations that return Promises (such as Firebase functions),
+                using <code>.then</code> and <code>.catch</code> is a common and
+                widely accepted practice.
+              </p>
+
+              <p>
+                <strong>How it works:</strong> Promises are a way to manage
+                asynchronous code. <code>.then</code> is used to specify what
+                should happen when a Promise successfully resolves, and
+                <code>.catch</code> is used to specify how to handle errors if
+                the Promise is rejected.
+              </p>
+
+              <p>
+                <strong>Benefits:</strong> This approach allows you to handle
+                success and error cases clearly and sequentially. It's a good
+                choice when you have multiple asynchronous operations to manage.
+              </p>
+
+              <h2>2. Using <code>async/await</code> (Async/Await Syntax):</h2>
+
+              <p>
+                <strong>Context:</strong> <code>async/await</code> is an
+                alternative way to work with Promises in JavaScript. It's also
+                considered a best practice, especially when you want to write
+                asynchronous code in a more sequential and synchronous-like
+                manner.
+              </p>
+
+              <p>
+                <strong>How it works:</strong> By using
+                <code>async</code> before a function and
+                <code>await</code> inside that function, you can pause the
+                execution of code until a Promise resolves. This makes
+                asynchronous code look and feel more like traditional
+                synchronous code.
+              </p>
+
+              <p>
+                <strong>Benefits:</strong> <code>async/await</code> can make
+                your code more readable, as it reduces the need for nested
+                <code>.then</code> blocks, making it easier to understand the
+                flow of your program. It's a good choice when you want to make
+                asynchronous code look more like synchronous code.
+              </p>
+
+              <p><strong>So, which one to choose?</strong></p>
+
+              <p>
+                - If you prefer a more sequential and synchronous-like code
+                structure and find it easier to read,
+                <code>async/await</code> can be a great choice. It can make
+                complex asynchronous code look simpler.
+              </p>
+
+              <p>
+                - If you're comfortable with Promises and prefer handling
+                success and error cases separately, using <code>.then</code> and
+                <code>.catch</code> is perfectly valid and widely used.
+              </p>
+
+              <p>
+                The choice between the two largely depends on your personal
+                coding style and the specific requirements of your project. Both
+                approaches are considered best practices, and you can use the
+                one that you find most comfortable and readable for your code.
+              </p>
+            </div>
+
+            <p>
+              With this code, your web app can now register users securely using
+              Firebase Authentication. 🔐✨
+            </p>
+
+            <p>
+              Remember to handle success and error cases appropriately, and
+              you're all set to implement user registration with Firebase in an
+              async modular SDK approach! 🎉🚀
+            </p>
+          </div>
+
+          <button class="btn moreInfoBtn">userCredential.user</button>
+          <div class="hidden btn--more-info-box">
+            <!-- Understanding Variable Assignment and Function Results in JavaScript 📦 -->
+
+            <h1>🧐Understanding `userCredential.user`</h1>
+
+            <p>
+              When you define a variable like <code>userCredential</code> and
+              assign it to the result of a function, you are effectively storing
+              the value returned by that function in the variable. In this case,
+              the <code>userCredential</code> variable holds the object returned
+              by the <code>createUserWithEmailAndPassword</code> function.
+            </p>
+
+            <p>Here's a breakdown of the process:</p>
+
+            <p>
+              1. You define a variable <code>userCredential</code> using
+              <code>const</code>. This variable will hold the value returned by
+              the <code>createUserWithEmailAndPassword</code> function.
+            </p>
+            <p>
+              2. You call the
+              <code>createUserWithEmailAndPassword</code> function, passing it
+              the required parameters (<code>auth</code>, <code>email</code>,
+              and <code>password</code>). This function performs the user
+              creation process.
+            </p>
+            <p>
+              3. The function returns an object that contains information about
+              the user creation process, including the user's account details.
+              This object is assigned to the
+              <code>userCredential</code> variable.
+            </p>
+            <p>
+              4. You can then access properties and methods of this object, such
+              as <code>userCredential.user</code>, to retrieve specific
+              information or perform further actions based on the result of the
+              user creation.
+            </p>
+
+            <p>
+              So, in essence, by assigning the result of the function to your
+              <code>userCredential</code> variable, you can work with the data
+              and properties returned by that function in your code.
+            </p>
+          </div>
+
+          <h2>Step 6: Create a Sign-In Page 🔑</h2>
+
+          <p>Design a sign-in form similar to the sign-up form.</p>
+          <p>Add form fields for email and password.</p>
+          <p>Create a sign-in button.</p>
+
+          <h2>Step 7: Implement User Sign-In 🚪</h2>
+
+          <p>Add an event listener to the sign-in button.</p>
+          <p>Use Firebase Auth to sign in the user:</p>
+
+          <div class="code code--js">
+            <p>
+              <em class="comnt"
+                >// If you're in a new module, import the functions you need</em
+              >
+            </p>
+
+            <br />
+            <p>
+              <em class="blu">const</em> signInBtn = document.getElementById(<em
+                class="grn"
+                >'sign-in-button'</em
+              >);
+            </p>
+            <p>
+              signInBtn.addEventListener(<em class="grn">'click'</em>, async (e)
+              => {
+            </p>
+            <p>
+              <em class="comnt"
+                >// Prevent the default form submission behavior</em
+              >
+            </p>
+            <p>&nbsp;&nbsp;e.preventDefault();</p>
+            <br />
+            <p>
+              <em class="comnt">// Your sign-in logic goes here</em>
+            </p>
+            <p>
+              <em class="blu">const </em>email = document.getElementById(<em
+                class="grn"
+                >'email-input'</em
+              >).value;
+            </p>
+            <p>
+              <em class="blu">const</em> password = document.getElementById(<em
+                class="grn"
+                >'password-input'</em
+              >).value;
+            </p>
+            <br />
+            <p><em class="blu">try</em> {</p>
+            <p><em class="comnt">// Sign user in</em></p>
+            <p>
+              &nbsp;&nbsp; <em class="blu">await</em>
+              <emn class="red">signInWithEmailAndPassword</emn>(auth, email,
+              password);
+            </p>
+            <p>
+              &nbsp;&nbsp; console.log(<em class="grn"
+                >'User was logged in!!'</em
+              >)
+            </p>
+            <br />
+
+            <p>
+              <em class="comnt">// User sign-in successful</em>
+            </p>
+            <p>}</p>
+            <p><em class="blu">catch</em> (error) {</p>
+            <p>
+              <em class="comnt">// Handle registration errors</em>
+            </p>
+            <p>&nbsp;&nbsp;console.error('Registration error:', error);</p>
+            <p>
+              <em class="comnt">// You can add error handling here</em>
+            </p>
+            <p>}</p>
+            <p>});</p>
+          </div>
+
+          <h2>Step 8: Add Sign-Out Functionality 🚀</h2>
+
+          <p>Create a "Sign Out" button in your UI.</p>
+          <p>Add an event listener to the button to sign the user out:</p>
+
+          <div class="code code--js">
+            <p>
+              <em class="comnt"
+                >// If you're in a new module, import the functions you need</em
+              >
+            </p>
+
+            <br />
+            <p>
+              <em class="blu">const</em> signInBtn = document.getElementById(<em
+                class="grn"
+                >'sign-in-button'</em
+              >);
+            </p>
+            <p>
+              signInBtn.addEventListener(<em class="grn">'click'</em>, async (e)
+              => {
+            </p>
+
+            <br />
+            <p>
+              <em class="comnt">// Your sign-out logic goes here</em>
+            </p>
+
+            <br />
+            <p><em class="blu">try</em> {</p>
+            <p><em class="comnt">// Sign user in</em></p>
+            <p>
+              &nbsp;&nbsp; <em class="blu">await</em>
+              <em class="red">signOut</em>(userCredential.user);
+            </p>
+            <p>
+              &nbsp;&nbsp; console.log(<em class="grn"
+                >'User was signed out!'</em
+              >)
+            </p>
+            <br />
+
+            <p>
+              <em class="comnt">// User log-off successful</em>
+            </p>
+            <p>}</p>
+            <p><em class="blu">catch</em> (error) {</p>
+            <p>
+              <em class="comnt">// Handle registration errors</em>
+            </p>
+            <p>&nbsp;&nbsp;console.error('Registration error:', error);</p>
+            <p>
+              <em class="comnt">// You can add error handling here</em>
+            </p>
+            <p>}</p>
+            <p>});</p>
+          </div>
+          <button class="btn moreInfoBtn">Add logic to buttons</button>
+          <div class="hidden btn--more-info-box">
+            <p>
+              You can use the <code>currentUser</code> property of the
+              <code>auth</code> service to check if a user is currently signed
+              in. This will give you the currently signed-in user if one exists,
+              or null if no user is signed in.
+            </p>
+            <p>
+              You can then use this information to determine how to handle the
+              user's session in your app.
+            </p>
+            <h2>🚛📃Imports, vars, and functions</h2>
+            <p>
+              I have organized my code with functions, and declared the
+              variables at the top along with the imports.
+            </p>
+            <div class="code">
+              <p><em class="blu">import</em> { auth,</p>
+              <p>createUserWithEmailAndPassword,</p>
+              <p>sendEmailVerification,</p>
+              <p>signInWithEmailAndPassword,</p>
+              <p>signOut,</p>
+              <p>&nbsp;} <em class="blu">from</em> './firebase';</p>
+              <br />
+              <br />
+              <p>
+                <em class="blu">const</em> createUserBtn =
+                document.getElementById('createUserBtn');
+              </p>
+              <p>
+                <em class="blu">const</em> signInBtn =
+                document.getElementById('signInBtn');
+              </p>
+              <p>
+                <em class="blu">const</em> signOutBtn =
+                document.getElementById('signOutBtn');
+              </p>
+              <br />
+              <br />
+              <p>CreateUser();</p>
+              <p>SignInUser();</p>
+              <p>SignOutUser();</p>
+            </div>
+            <h2>📗Create User</h2>
+            <p>
+              Simply wrap your try catch in an if else statement to add button
+              logic:
+            </p>
+            <div class="code code--js">
+              <p>async function CreateUser() {</p>
+              <p>createUserBtn.addEventListener(click', async (e) => {</p>
+              <p>e.preventDefault();</p>
+              <br />
+              <p>const email = document.getElementById("email").value;</p>
+              <p>const password = document.getElementById("password").value;</p>
+              <br />
+              <p><em class="grn">if(!auth.currentUser){</em></p>
+              <br />
+              <p>try {</p>
+              <p>
+                <em class="comnt"
+                  >// Create a new user with email and password</em
+                >
+              </p>
+              <p>
+                const userCredential = await createUserWithEmailAndPassword(
+              </p>
+              <p>auth,</p>
+              <p>email,</p>
+              <p>password</p>
+              <p>);</p>
+              <p><em class="comnt">// Send email verification</em></p>
+              <p>await sendEmailVerification(userCredential.user);</p>
+              <p>
+                <em class="comnt"
+                  >// Inform the user to check their email for verification</em
+                >
+              </p>
+              <p>alert("Please check your email for verification.💌📬");</p>
+              <p>
+                <em class="comnt"
+                  >// Optionally, redirect the user to a verification page or
+                  log them in immediately</em
+                >
+              </p>
+              <p>}</p>
+              <p>catch (error) {</p>
+              <p>console.error("Registration error:", error.message);</p>
+              <p>alert("‼🧨💣‼ERR: " + error);</p>
+              <p>}</p>
+              <br />
+              <p><em class="grn">}</em></p>
+              <p><em class="grn">else{</em></p>
+              <p>
+                <em class="grn"
+                  >alert("📗You already have an account and are logged
+                  in!!👍")</em
+                >
+              </p>
+              <p><em class="grn">}</em></p>
+              <br />
+              <p>});</p>
+              <br />
+              <p>}</p>
+            </div>
+            <h2>👍Sign in</h2>
+            <p></p>
+            <div class="code">
+              <p>async function SignInUser(){</p>
+              <br />
+              <p>signInBtn.addEventListener('click', async (e) => {</p>
+              <p>e.preventDefault();</p>
+              <br />
+              <p>const email = document.getElementById("email").value;</p>
+              <p>const password = document.getElementById("password").value;</p>
+              <br />
+              <p><em class="grn">if(!auth.currentUser) {</em></p>
+              <br />
+              <p>try {</p>
+              <p>await signInWithEmailAndPassword(auth, email, password);</p>
+              <p>
+                alert("user: " + auth.currentUser.email + " signed in!!!!🥳" )
+              </p>
+              <p>}</p>
+              <p>catch (error) {</p>
+              <p>console.error("sign in err")</p>
+              <p>alert("ERR: " + error);</p>
+              <p>}</p>
+              <br />
+              <p><em class="grn">}</em></p>
+              <p><em class="grn">else {</em></p>
+              <p>
+                <em class="grn">alert("you are already logged in!!!!!😁")</em>
+              </p>
+              <p><em class="grn">}</em></p>
+              <br />
+              <p>});</p>
+              <br />
+              <p>}</p>
+            </div>
+            <h2>⭕Sign out</h2>
+            <p></p>
+            <div class="code">
+              <p>async function SignOutUser() {</p>
+              <br />
+              <p>signOutBtn.addEventListener('click', async (e) => {</p>
+              <p>
+                e.preventDefault(); // prevent the form from being submitted
+              </p>
+              <p><em class="comnt">// handle sign-out logic here</em></p>
+              <p><em class="grn">if(auth.currentUser) {</em></p>
+              <p>try {</p>
+              <p>// Sign user out</p>
+              <p>signOut(auth);</p>
+              <br />
+              <p>alert('User was signed out!🥱😴')</p>
+              <p>}</p>
+              <p>catch (error) {</p>
+              <p>// Handle registration errors</p>
+              <p>console.error('sign out error:', error);</p>
+              <p>// You can add error handling here</p>
+              <p>}</p>
+              <p><em class="grn">}</em></p>
+              <p><em class="grn">else {</em></p>
+              <p><em class="grn">alert('⛔no user is signed in!!');</em></p>
+              <p><em class="grn">}</em></p>
+              <br />
+              <p>});</p>
+              <br />
+              <p>}</p>
+            </div>
+          </div>
+          <h2>Step 9: Secure Your Routes 🔒</h2>
+
+          <p>
+            Use Firebase Authentication to protect specific routes or content
+            that only authenticated users should access.
+          </p>
+          <p>
+            <b>🚨🔴IMPORTANT WORD OF CAUTION🔴🚨</b>
+            <br />
+            This is the bare-bones-basics, and is intended to get you on the
+            right track, however in a real world application, proper security
+            measures should be taken to ensure the protection of important user
+            and/or site data.
+          </p>
+          <p>
+            Now you have a 🔥 Firebase-powered web app with user authentication!
+            Remember to handle errors gracefully and style your app to make it
+            visually appealing. Good luck with your project! 🌟🎉
+          </p>
+        </article>
+      </section>
+    </div>
+    <!--! MAIN-WRAP -->
+    <!--! !!!!!!! -->
+    <script src="/JS/dynamic-nav.js"></script>
+    <script src="/JS/dropdown-more-info.js"></script>
+  </body>
+</html>

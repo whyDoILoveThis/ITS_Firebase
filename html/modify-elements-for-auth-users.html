@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>🔀Modify Page Elements</title>
+  </head>
+  <body>
+    <!--!!!!!-->
+    <!--! MAIN-WRAP -->
+    <div class="main-wrap">
+      <section class="article-wrap">
+        <article class="article">
+          <h1>
+            🔀Manipulating Web Elements Based on User Status with Firebase
+          </h1>
+
+          <h2>1. Modifying HTML Elements</h2>
+
+          <h3>When to Use Modifying Elements:</h3>
+          <p>
+            Modifying HTML elements is suitable for making minor changes within
+            existing elements, such as updating text, changing styles, or
+            tweaking attributes.
+          </p>
+
+          <h3>Selecting Elements with JavaScript:</h3>
+          <p>
+            Use various methods like getElementById, querySelector, or
+            getElementsByClassName to select elements.
+          </p>
+
+          <div class="code code--js">
+            <p>
+              <em class="comnt">// Select an element by its CSS selector</em>
+            </p>
+            <p>
+              <em class="blu">const</em> element = document.querySelector(<em
+                class="grn"
+                >'#elementID'</em
+              >);
+            </p>
+          </div>
+
+          <h3>Modifying Element Style:</h3>
+          <p>
+            Modify element styles using JavaScript, such as changing colors or
+            fonts.
+          </p>
+
+          <div class="code code--js">
+            <p><em class="comnt">// Change background color</em></p>
+            <p>
+              element.style.backgroundColor = <em class="grn">'#4CAF50'</em>;
+            </p>
+          </div>
+
+          <h3>Modifying Content:</h3>
+          <p>Change element content by modifying the textContent property.</p>
+
+          <div class="code code--js">
+            <p><em class="comnt">// Modify text content</em></p>
+            <p>
+              element.textContent =
+              <em class="grn">'Welcome, Awesome User! 😎'</em>;
+            </p>
+          </div>
+
+          <h3>CSS Magic:</h3>
+          <p>Use CSS to style elements, enhancing visual appeal.</p>
+
+          <div class="code code--js">
+            <p>
+              <code
+                ><em class="comnt">
+                  /* Example CSS for styling authenticated and non-authenticated
+                  content */
+                </em></code
+              >
+            </p>
+            <p>element.style.fontSize = <em class="grn">'24px'</em>;</p>
+            <p>element.style.color = <em class="grn">'white'</em>;</p>
+          </div>
+          <br />
+          <p><strong>Example: Modifying HTML Elements:</strong></p>
+          <div class="code code--js">
+            <p>if (auth.currentUser) {</p>
+            <p><em class="comnt">// User is signed in</em></p>
+            <p>
+              const element = document.querySelector(<em class="grn"
+                >'#elementID'</em
+              >); >
+            </p>
+            <p>
+              element.style.backgroundColor = <em class="grn">'#4CAF50'</em>;
+            </p>
+            <p>
+              element.textContent =
+              <em class="grn">'Welcome, Awesome User! 😎'</em>;
+            </p>
+            <p>}</p>
+          </div>
+
+          <h2>2. Injecting New HTML Code</h2>
+
+          <h3>When to Use Injecting New HTML:</h3>
+          <p>
+            Injecting new HTML code is ideal for replacing entire sections,
+            integrating static content, or embedding third-party elements.
+          </p>
+
+          <h3>Creating a Container Element:</h3>
+          <p>Create an HTML container element to insert new HTML content.</p>
+
+          <div class="code code--html">
+            <p>
+              <em class="comnt"
+                >&lt;!-- Create a container for injecting new HTML --&gt;</em
+              >
+            </p>
+            <p>
+              &lt;div id=<em class="grn">"htmlContainer"</em>&gt;&lt;/div&gt;
+            </p>
+          </div>
+
+          <h3>Using JavaScript to Insert HTML:</h3>
+          <p>
+            <b>NOTE: </b>You MUST use backticks(``) when creating your html
+            string.
+          </p>
+          <p>
+            Inject HTML code into the container using the innerHTML property.
+          </p>
+
+          <div class="code code--js">
+            <p><em class="comnt">// Your HTML string</em></p>
+            <p>
+              <code
+                ><em class="blu">const</em> htmlString =
+                <em class="grn">
+                  `&lt;h1&gt;Hello, &lt;em&gt;World!&lt;/em&gt;&lt;/h1&gt;` </em
+                >;</code
+              >
+            </p>
+            <p><em class="comnt">// Get the container element</em></p>
+            <p>
+              <code
+                ><em class="blu">const</em> container =
+                document.getElementById(<em class="grn">'htmlContainer'</em
+                >);</code
+              >
+            </p>
+            <p>
+              <em class="comnt"
+                >// Insert the HTML string into the container</em
+              >
+            </p>
+            <p>container.innerHTML = htmlString;</p>
+          </div>
+
+          <h2>3. Dynamic Class Insertion</h2>
+
+          <h3>When to Use Dynamic Class Insertion:</h3>
+          <p>
+            Dynamic class insertion is perfect for controlling element
+            visibility or behavior based on user authorization without altering
+            the HTML structure.
+          </p>
+
+          <h3>How Dynamic Class Insertion Works:</h3>
+          <p>
+            Add or remove CSS classes to elements using JavaScript based on user
+            authorization status.
+          </p>
+
+          <div class="code">
+            <p><em class="comnt">// Check if the user is authorized</em></p>
+            <p><em class="blu">if</em> (userIsAuthorized) {</p>
+            <p>
+              <em class="comnt"
+                >// Add a class to show an authorized-only element</em
+              >
+            </p>
+            <p>
+              document.getElementById(<em class="grn">'authorizedElement'</em
+              >).classList.add(<em class="grn">'show'</em>);
+            </p>
+            <p>}</p>
+          </div>
+
+          <h3>Balancing the Approaches:</h3>
+          <p>
+            Choose the right method based on your use case, considering factors
+            like performance, security, and user experience.
+          </p>
+
+          <p>
+            You can combine methods to achieve the desired results effectively.
+          </p>
+
+          <h2>4. Conclusion</h2>
+
+          <h3>Recap of Techniques:</h3>
+          <p>
+            Modifying HTML Elements: For minor changes within existing elements.
+          </p>
+          <p>
+            Injecting New HTML Code: For replacing entire sections or
+            integrating static content.
+          </p>
+          <p>
+            Dynamic Class Insertion: For controlling element visibility or
+            behavior based on user authorization.
+          </p>
+
+          <h3>Best Practices:</h3>
+          <p>Prioritize security by validating and sanitizing injected HTML.</p>
+          <p>Consider the performance impact of your choice.</p>
+          <p>
+            Balance the methods for an efficient and user-friendly web
+            application.
+          </p>
+
+          <h3>Next Steps:</h3>
+          <p>
+            Apply the techniques to your web application, enhancing user
+            experience and adaptability.
+          </p>
+
+          <p>
+            By following this enriched tutorial with code examples, you now
+            possess the knowledge and practical skills to create a dynamic web
+            application that adapts seamlessly to user authentication status
+            using Firebase. Your website will shine with personalized touches
+            and a visually appealing design! 🌟🖥️🎨
+          </p>
+        </article>
+      </section>
+    </div>
+    <!--! MAIN-WRAP -->
+    <!--! !!!!!!! -->
+    <script src="/JS/dynamic-nav.js"></script>
+  </body>
+</html>

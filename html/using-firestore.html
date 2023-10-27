@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>👨‍🚒Using Firestore</title>
+  </head>
+  <body>
+    <!--!!!!!-->
+    <!--! MAIN-WRAP -->
+    <div class="main-wrap">
+      <section class="article-wrap">
+        <article class="article">
+          <h1 class="article__heading">
+            👥Storing and Displaying Usernames with Firestore
+          </h1>
+
+          <p>
+            Last time, we used the most basic method to display a user's
+            username.
+            <br />
+            <br />
+            This time, we are going to achieve the same result but leverage the
+            Firestore database. This is going to set us up to create a way for
+            users to make custom profiles, and store more user-related data.
+          </p>
+
+          <!-- Step 1: Set Up Firestore in the Firebase Console -->
+          <h2>Step 1: Set Up Firestore in the Firebase Console 🛠️</h2>
+
+          <p>
+            Go to the
+            <a href="https://console.firebase.google.com/" target="_blank"
+              >Firebase Console</a
+            >
+            and make sure you have Firestore setup.
+          </p>
+
+          <!-- Step 2: Import Firestore Functions -->
+          <h2>Step 2: Import Firestore Functions 🔌</h2>
+
+          <p>
+            In your JavaScript code, import the necessary Firestore functions:
+          </p>
+
+          <div class="code code--js">
+            <p><em class="comnt">// Import Firestore functions</em></p>
+            <p>
+              <em class="blu">import</em> { <em class="red">getFirestore</em>,
+              <em class="red">doc</em>, <em class="red">setDoc</em>,
+              <em class="red">getDoc</em> } <em class="blu">from</em>
+              <em class="grn">'firebase/firestore'</em>;
+            </p>
+          </div>
+
+          <p>
+            Ensure that you have initialized Firebase in your app and have
+            access to the <code>app</code> object. You can find more information
+            on initializing Firebase in the
+            <a href="https://firebase.google.com/docs/web/setup" target="_blank"
+              >Firebase documentation</a
+            >.
+          </p>
+
+          <!-- Step 3: Write Code to Create and Store User Data -->
+          <h2>Step 3: Write Code to Create and Store User Data 📝</h2>
+
+          <p>
+            Now, let's write the code to create and store user data in a
+            Firestore collection named 'users'. Maybe apply this after the email
+            verification.
+          </p>
+
+          <div class="code code--js">
+            <p><em class="comnt">// Initialize Firestore</em></p>
+            <p>
+              <em class="blu">const</em> db =
+              <em class="red">getFirestore</em>(app);
+            </p>
+
+            <br />
+
+            <p>
+              <em class="comnt">// Function to create and store user data</em>
+            </p>
+            <p><em class="blu">async</em> function createUserProfile(user) {</p>
+            <p><em class="blu">try</em> {</p>
+            <p>
+              <em class="comnt">
+                // Create a reference to the 'users' collection using the user's
+                UID
+              </em>
+            </p>
+            <p>
+              <em class="blu">const</em> userDocRef =
+              <em class="red">doc</em>(db, <em class="grn">'users'</em>,
+              user.uid);
+            </p>
+
+            <br />
+
+            <p><em class="comnt">// Set the user data in Firestore</em></p>
+            <p>
+              <em class="blu">await</em> <em class="red">setDoc</em>(userDocRef,
+              {
+            </p>
+            <p>
+              username: 'user123',
+              <em class="comnt">// Replace with your username var</em>
+            </p>
+            <p>
+              <em class="comnt"
+                >// Add more user-related data here if needed</em
+              >
+            </p>
+            <p>});</p>
+
+            <br />
+
+            <p>console.log('User profile created successfully!');</p>
+            <p>} <em class="blu">catch</em> (error) {</p>
+            <p>console.error('Error creating user profile:', error);</p>
+            <p>}</p>
+            <p>}</p>
+          </div>
+
+          <p>
+            This code initializes Firestore, creates a reference to the 'users'
+            collection using the user's UID, and sets user data, including the
+            username, in Firestore. You can add more user-related data as
+            needed.
+          </p>
+
+          <button class="btn moreInfoBtn">
+            Where Did the 'user' parameter come from?
+          </button>
+          <div class="hidden btn--more-info-box">
+            <h1>
+              🔐 Understanding the 'user' Object in Firebase Authentication
+            </h1>
+
+            <p>
+              The parameter 'user' represents a user object, which typically
+              contains information about the currently authenticated user. This
+              user object is commonly generated after a user logs in or
+              registers using Firebase Authentication.
+            </p>
+
+            <p>Here's a more detailed explanation:</p>
+
+            <h2>User Authentication</h2>
+            <p>
+              Before you can access a user object, you need to have user
+              authentication in place. Firebase Authentication is used to
+              authenticate users, handle registration, and manage user sessions.
+              When a user successfully logs in or registers, Firebase
+              Authentication provides information about the authenticated user.
+            </p>
+
+            <h2>Generating the User Object</h2>
+            <p>
+              The 'user' object is typically generated as a result of a
+              successful authentication operation. For example, after a user
+              logs in, you can retrieve the user object from the authentication
+              state.
+            </p>
+
+            <p>
+              In JavaScript with Firebase, you can often access the user object
+              like this:
+            </p>
+
+            <div class="code code--js">
+              <p>
+                <em class="blu">const</em> auth =
+                <em class="red">getAuth</em>(app);
+                <em class="comnt"> // Initialize Firebase Authentication </em>
+              </p>
+              <p>
+                <em class="blu">let</em> user = auth.currentUser;
+                <em class="comnt"> // Get the currently authenticated user </em>
+              </p>
+            </div>
+
+            <p>
+              Here, <code>auth.currentUser</code> provides access to the
+              currently authenticated user. This 'user' object contains
+              information such as the user's UID, email, display name, and more.
+            </p>
+
+            <h2>Passing the User Object</h2>
+            <p>
+              In the code example, I used the 'user' object as a parameter to
+              the <code>createUserProfile</code> function. This is assuming that
+              you have obtained the 'user' object as shown above, and you're
+              passing it to the function to create and store user data in
+              Firestore.
+            </p>
+
+            <div class="code code--js">
+              <p>async function createUserProfile(user) {</p>
+              <p>// ...</p>
+              <p>}</p>
+            </div>
+
+            <p>
+              By passing the 'user' object to this function, you can extract
+              information like the user's UID and use it to create a Firestore
+              document associated with that user.
+            </p>
+            <p>
+              So, to clarify, the 'user' object is generated after a user logs
+              in or registers with Firebase Authentication. You can access it
+              from the authentication state and pass it as a parameter to
+              functions that need to work with user-related data, such as
+              creating user profiles in Firestore.
+            </p>
+          </div>
+
+          <h2>📃Step 4: Displaying the Username</h2>
+          <p>To keep this as simple as possible...</p>
+
+          <p>We are going to target this:</p>
+          <div class="code code--html">
+            <p>&lt;h1 class=<em class="grn">"user-name"</em>&gt;&lt;/h1&gt;</p>
+          </div>
+          <p>With this:</p>
+          <div class="code code--js">
+            <p>
+              <em class="blu">const</em> usernameContainer =
+              document.querySelector(<em class="grn">'.user-name'</em>);
+            </p>
+          </div>
+          <p>
+            Then create a 'DisplayUsername();' The first thing it does is create
+            an event listener for the authorization state. Then we have an if
+            the user is signed in, get the username and display it. Otherwise no
+            user is signed in and we can display the result of that accordingly.
+          </p>
+          <div class="code code--js">
+            <p><em class="blu">function</em> DisplayUsername() {</p>
+            <br />
+            <p><em class="red">auth</em>.onAuthStateChanged((user) => {</p>
+
+            <p><em class="blu">if</em> (user) {</p>
+            <br />
+            <p>
+              <em class="blu">const</em> userDocRef =
+              <em class="red">doc</em>(<em class="red">db</em>,
+              <em class="grn">'users'</em>, user.uid);
+            </p>
+            <br />
+            <p>
+              <em class="comnt">// Get the user document from Firestore</em>
+            </p>
+            <p><em class="red">getDoc</em>(userDocRef)</p>
+            <p>.<em class="blu">then</em>((docSnapshot) => {</p>
+            <p><em class="blu">if</em> (docSnapshot.exists()) {</p>
+            <br />
+            <p>
+              <em class="comnt"
+                >// If the document exists, retrieve the username field</em
+              >
+            </p>
+            <p><em class="blu">const</em> userData = docSnapshot.data();</p>
+            <p><em class="blu">const</em> username = userData.username;</p>
+            <br />
+            <p>
+              <em class="comnt">// Display the username in your application</em>
+            </p>
+            <p>
+              usernameContainer.textContent =
+              <em class="grn">`Username: ${username}`</em>;
+            </p>
+            <p></p>
+
+            <p>}</p>
+            <p>})</p>
+            <p>.<em class="blu">catch</em>((error) => {</p>
+            <p>
+              console.error(<em class="grn">'Error getting user document:'</em>,
+              error);
+            </p>
+            <p>});</p>
+            <p>}</p>
+            <p><em class="blu">else</em> {</p>
+            <br />
+            <p>console.log(<em class="grn">'No user is signed in'</em>);</p>
+            <p>
+              usernameContainer.textContent =
+              <em class="grn">'Logged Out'</em>;
+            </p>
+
+            <p>});</p>
+            <p>}</p>
+          </div>
+          <button class="btn moreInfoBtn btn--important">
+            Registration error: Missing or insufficient permissions
+          </button>
+          <div class="hidden btn--more-info-box">
+            <h1>
+              🔒 Fixing "Registration error: Missing or insufficient
+              permissions" in Firestore 🔒
+            </h1>
+
+            <p>
+              The "Registration error: Missing or insufficient permissions"
+              error typically occurs when the security rules for Firestore
+              prevent a user from writing data to a specific location in the
+              database. Firestore has security rules in place to control who can
+              read and write data, and if the rules are not set correctly, you
+              may encounter this error.
+            </p>
+
+            <p>
+              To resolve this issue, you need to adjust your Firestore security
+              rules to allow users to write data to the 'users' collection.
+              Here's how you can modify your security rules:
+            </p>
+
+            <div class="code code--json">
+              <p>service cloud.firestore {</p>
+              <p>&nbsp;&nbsp;match /databases/{database}/documents {</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;<em class="comnt">
+                  // Allow read and write access to the 'users' collection
+                </em>
+              </p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;match /users/{userId} {</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allow read, write: if
+                request.auth != null;
+              </p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;<em class="comnt">
+                  // ... Add other rules for your collections ...
+                </em>
+              </p>
+              <p>&nbsp;&nbsp;}</p>
+              <p>}</p>
+            </div>
+
+            <p>
+              In this example, we're allowing authenticated users to read and
+              write data to the 'users' collection. You can adjust these rules
+              according to your application's requirements.
+            </p>
+
+            <p>
+              After updating the rules, be sure to publish them by clicking the
+              "Publish" button on the Firestore Rules tab.
+            </p>
+
+            <p>
+              Once you've adjusted the security rules, you should no longer
+              encounter the "Missing or insufficient permissions" error when
+              creating user profiles in Firestore.
+            </p>
+          </div>
+
+          <!-- Step 4: Compare and Contrast -->
+          <h2>Compare and Contrast 🔄</h2>
+
+          <p>
+            Now that we've set up Firestore to store user data, let's compare
+            and contrast this approach with the previous one using Firebase
+            Authentication's <code>displayName</code>:
+          </p>
+
+          <p><strong>Firebase Authentication (Previous Approach):</strong></p>
+          <p>- Simpler for basic user identification and authentication.</p>
+          <p>- Limited to the user's display name.</p>
+          <p>- May not handle more complex user-related data efficiently.</p>
+
+          <br />
+
+          <p><strong>Firestore (Current Approach):</strong></p>
+          <p>
+            - Offers flexibility for storing and querying user-related data.
+          </p>
+          <p>
+            - Allows for the creation of custom user profiles with additional
+            information.
+          </p>
+          <p>
+            - Provides scalability for future features like comments, likes, and
+            custom collections.
+          </p>
+
+          <p>
+            This approach using Firestore sets the foundation for building
+            custom user profiles and additional features in your social site. It
+            offers more control and flexibility for managing user data as your
+            application grows.
+          </p>
+
+          <p>
+            Now, you're ready to create custom user profiles and enhance your
+            social site! 🍳👨‍🍳👩‍🍳
+          </p>
+        </article>
+      </section>
+    </div>
+    <!--! MAIN-WRAP -->
+    <!--! !!!!!!! -->
+    <script src="/JS/dynamic-nav.js"></script>
+    <script src="/JS/dropdown-more-info.js"></script>
+  </body>
+</html>
