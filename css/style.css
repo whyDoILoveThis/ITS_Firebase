@@ -25,6 +25,28 @@ body {
 
 }
 
+body::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #515151;
+}
+
+body::-webkit-scrollbar
+{
+    border-radius: 10px;
+
+	width: 5px;
+	background-color: #000000;
+}
+
+body::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #4C9FFF;
+}
+
 
 ul {
     list-style-type: none;
@@ -75,18 +97,42 @@ em {
 
 .nav {
     z-index: 100;
-    background-color: rgb(34, 34, 34);
+    background: rgba(34, 34, 34, 0.826);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     width: 30%;
     height: 100%;
-    border-right: 2px solid rgb(208, 211, 222);
     position: fixed;
-    border-top-right-radius: 17px;
     overflow: auto;
-    margin-top: 0.5rem;
     transition: all 0.37s ease-out;
 }
+
+.nav::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #515151;
+}
+
+.nav::-webkit-scrollbar
+{
+    border-radius: 10px;
+
+	width: 3px;
+	background-color: #000000;
+}
+
+.nav::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #4182cd;
+}
+
+
+
 
 .logo-wrap {
     height: auto;
@@ -124,6 +170,15 @@ em {
     right: 10px;
  
 }
+
+.other-guides-wrap {
+    margin: 0.5rem;
+}
+
+.other-guides-wrap > a > img {
+    width: 28px;
+}
+
 
 .article-wrap {
     margin-left: 30%;
@@ -285,16 +340,30 @@ em {
     font-size: 24px;
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.577);
     padding: 10px 20px;
-    background-color: #3498db;
-    color: #fff;
+    background-color: #27396a;
+   
+    color: #6cbbfb;
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 10px;
     border: 1.5px solid rgb(0, 0, 0);
     margin-top: 1rem;
 }
 
+.btn::after {
+    background-image: url(../img/chevron.png);
+    background-size: 25px 20px;
+    display: inline-block;
+    width: 25px;
+    height: 20px;
+    margin-left: 1rem;
+    opacity: 0.3;
+    transform: translateY(5px);
+    content: ' ';
+}
+
 .btn--important {
-    background-color: red;
+    color: rgb(252, 107, 107);
+    background-color: rgb(83, 32, 32);
 }
 
 .btn--more-info-box {
@@ -366,7 +435,7 @@ em {
     margin-bottom: 0;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 778px) {
     .nav-toggler {
         position: fixed;
         display: none;
@@ -407,9 +476,17 @@ em {
         transform: translateY(60px);
     }
 
+    .other-guides-wrap {
+        transform: translate(125px, -16px);
+    }
+
+    .other-guides-wrap > a > img {
+        width: 28px;
+    }
+
     .logo-wrap {
+        margin-bottom: 25px;
         place-self: center;
-        margin-bottom: 50px;
         padding-right: var(--size--brightness-toggler);
         padding-left: var(--size--brightness-toggler);
     }

@@ -1,18 +1,34 @@
+
+
+
+// BROWSER TAB ICON
 const head = document.getElementsByTagName('head')[0];
 const tabIcon = document.createElement("link");
 tabIcon.href = "/img/site-logo-icon.png";
 tabIcon.rel = "icon";
 head.appendChild(tabIcon);
 
-const articleWrap = document.querySelector(".article-wrap");
 
+
+
+
+
+
+
+// COPYRIGHT FOOTER
+const articleWrap = document.querySelector(".article-wrap");
 const copyright = document.createElement("p");
 copyright.classList.add("copyright");
-
 articleWrap.appendChild(copyright);
-
-// Select the target element
 const container = document.querySelector(".main-wrap");
+
+
+
+
+
+
+
+
 
 // Create the main navigation element
 const navigation = document.createElement("nav");
@@ -26,6 +42,12 @@ const navToggler = document.createElement("img");
 navToggler.src = "/img/icon-nav-toggler.png";
 navToggler.classList.add("nav-toggler");
 navToggler.addEventListener("click", expandNav);
+
+
+
+
+
+
 
 
 
@@ -59,9 +81,38 @@ const article = document.querySelector('.article')
 
 darkModeToggler.addEventListener("click", toggleBrightness);
 
+const otherGuidesWrap = document.createElement("div");
+otherGuidesWrap.classList.add("other-guides-wrap");
+const linkBash = document.createElement('a');
+const imgBash = document.createElement("img");
+imgBash.src = "/img/git-bash-icon.png";
+linkBash.href = "https://its-git-bash.vercel.app";
+linkBash.appendChild(imgBash);
+otherGuidesWrap.appendChild(linkBash);
+
+
+
+
+
+
+
+
+// Append the logo icon and tag to the logo-wrap div
+logoWrap.appendChild(navToggler);
+logoWrap.appendChild(logoIcon);
+logoWrap.appendChild(logoTag);
+
+
+
+
+
+
+
+
+
+
 
 const infoBoxes = document.querySelectorAll('.btn--more-info-box');
-
 
 // Check if 'bright' is stored in localStorage
 const storedBright = localStorage.getItem('bright');
@@ -105,10 +156,6 @@ function toggleBrightness() {
 toggleBrightness();
 
 
-// Append the logo icon and tag to the logo-wrap div
-logoWrap.appendChild(navToggler);
-logoWrap.appendChild(logoIcon);
-logoWrap.appendChild(logoTag);
 
 
 
@@ -193,6 +240,7 @@ linkList.appendChild(linkItem14);
 
 // Append the logo-wrap div and links list to the navigation
 navigation.appendChild(logoWrap);
+navigation.appendChild(otherGuidesWrap);
 navigation.appendChild(darkModeTogglerWrap);
 navigation.appendChild(linkList);
 
